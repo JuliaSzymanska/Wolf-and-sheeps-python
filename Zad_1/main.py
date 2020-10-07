@@ -59,6 +59,7 @@ def least_common_multiple(val1: int, val2: int) -> int:
     :param val2:
     :return:
     """
+
     def get_value_divisors(val: int) -> list:
         val_divisors: list = []
         while val > 1:
@@ -74,6 +75,7 @@ def least_common_multiple(val1: int, val2: int) -> int:
                     val_divisors.append(i)
                     break
         return val_divisors
+
     val1_divisors: list = get_value_divisors(val1)
     val2_divisors: list = get_value_divisors(val2)
     val1_divisors_unique = set(val1_divisors)
@@ -88,8 +90,20 @@ def least_common_multiple(val1: int, val2: int) -> int:
     return least_common_multiple_value
 
 
+def least_common_multiple_by_julia(val1: int, val2: int) -> int:
+    def gdc(a, b):
+        if b == 0:
+            return a
+        return gdc(b, a % b)
+
+    def lcm(a, b) -> int:
+        return (a / gdc(a, b)) * b
+
+    return lcm(val1, val2)
+
+
 def main() -> None:
-    wallis
+    # wallis
     for i in range(1, 10):
         print(wallis(i))
     # Euclidean_GDC
