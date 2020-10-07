@@ -44,8 +44,10 @@ def sieve_of_erastothenes(max_val: int) -> list:
         return x % n == 0
 
     values: list = list(range(2, max_val + 1))
+    print(values)
     for i in values:
         values[:] = [x for x in values if not determine(x, i)]
+        print(values)
     return values
 
 
@@ -87,7 +89,7 @@ def least_common_multiple(val1: int, val2: int) -> int:
 
 
 def main() -> None:
-    # wallis
+    wallis
     for i in range(1, 10):
         print(wallis(i))
     # Euclidean_GDC
