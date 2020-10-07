@@ -127,3 +127,23 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# moje
+*.idea/
+PlotnijSe.py
+wierzcholki_wielokata.txt
+punkty.txt
+#Karol
+#vs code
+.vscode/
+
+#png i gif
+*.gif
+
+test.txt
+*.docx
+*.zip
+*.zipp
+*.tmp
+war_na_3/mean_squared_error.txt
+mean_squared_error.txt
