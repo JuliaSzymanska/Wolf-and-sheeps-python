@@ -54,6 +54,7 @@ def least_common_multiple(val1: int, val2: int) -> int:
     def get_value_divisors(val: int) -> list:
         val_divisors: list = []
         while val > 1:
+            # todo optimize
             possible_values = list(range(2, val + 1))
             for i in possible_values:
                 if val % i == 0:
