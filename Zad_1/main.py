@@ -33,12 +33,29 @@ def euclidean_GDC(val1: int, val2: int) -> int:
     return val1
 
 
+def sieve_of_erastothenes(max_val: int) -> list:
+    """
+    :param max_val:
+    :return:
+    """
+
+    def determine(x, n):
+        return x % n == 0
+
+    values: list = list(range(2, max_val + 1))
+    for i in values:
+        values[:] = [x for x in values if not determine(x, i)]
+    return values
+
+
 def main() -> None:
     # wallis
     for i in range(1, 10):
         print(wallis(i))
     # Euclidean_GDC
     print(euclidean_GDC(18, 84))
+    # Sieve
+    print(sieve_of_erastothenes(100))
 
 
 # Press the green button in the gutter to run the script.
