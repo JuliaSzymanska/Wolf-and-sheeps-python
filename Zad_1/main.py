@@ -74,7 +74,6 @@ def least_common_multiple(val1: int, val2: int) -> int:
         count = max(val1_divisors.count(i), val2_divisors.count(i))
         least_common_multiple_value *= i ** count
         val2_divisors_unique.remove(i)
-    print(val2_divisors_unique)
     for i in val2_divisors_unique:
         least_common_multiple_value *= i ** val2_divisors.count(i)
     return least_common_multiple_value
