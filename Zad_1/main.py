@@ -51,22 +51,18 @@ def sieve_of_erastothenes(max_val: int) -> list:
 
 # todo cleanup
 def least_common_multiple(val1: int, val2: int) -> int:
-    val1_divisors: list = []
-    while val1 > 1:
-        possible_values = list(range(2, val1 + 1))
-        for i in possible_values:
-            if val1 % i == 0:
-                val1 = int(val1 / i)
-                val1_divisors.append(i)
-                break
-    val2_divisors: list = []
-    while val2 > 1:
-        possible_values = list(range(2, val2 + 1))
-        for i in possible_values:
-            if val2 % i == 0:
-                val2 = int(val2 / i)
-                val2_divisors.append(i)
-                break
+    def get_value_divisors(val: int) -> list:
+        val_divisors: list = []
+        while val > 1:
+            possible_values = list(range(2, val + 1))
+            for i in possible_values:
+                if val % i == 0:
+                    val = int(val / i)
+                    val_divisors.append(i)
+                    break
+        return val_divisors
+    val1_divisors: list = get_value_divisors(val1)
+    val2_divisors: list = get_value_divisors(val2)
     val1_divisors_unique = set(val1_divisors)
     val2_divisors_unique = set(val2_divisors)
     least_common_multiple_value: int = 1
