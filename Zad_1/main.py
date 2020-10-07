@@ -61,6 +61,10 @@ def least_common_multiple(val1: int, val2: int) -> int:
         val_divisors: list = []
         while val > 1:
             # todo optimize
+            """
+            to jest kiepskie, powinno przynajmniej iść do max sqrt(val) + 1, i jakimś mądrym alg powinienme generować wszystrkie dzielniki
+            imagine jakiświelki gigantyczny prime xd 
+            """
             possible_values = list(range(2, val + 1))
             for i in possible_values:
                 if val % i == 0:
