@@ -51,6 +51,12 @@ def sieve_of_erastothenes(max_val: int) -> list:
 
 # todo cleanup
 def least_common_multiple(val1: int, val2: int) -> int:
+    """
+
+    :param val1:
+    :param val2:
+    :return:
+    """
     def get_value_divisors(val: int) -> list:
         val_divisors: list = []
         while val > 1:
