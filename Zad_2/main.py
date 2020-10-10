@@ -1,3 +1,4 @@
+import math
 import random
 
 
@@ -44,12 +45,30 @@ class Sheep(Animal):
 
 
 class Wolf(Animal):
-    def __init__(self, move_dist):
+    def __init__(self, move_dist, game_sheep):
         super().__init__(move_dist)
+        self.game_sheep: [Sheep] = game_sheep
+
+    def calculate_distance(self, one_game_sheep: Sheep):
+        return math.sqrt(int(one_game_sheep.position[0] - self.position[0]) ^ 2 + int(
+            one_game_sheep.position[1] - self.position[1]) ^ 2)
+
+    def select_move(self):
+        distance = []
+        for s in self.game_sheep:
+            distance.append(self.calculate_distance(s))
+
+
 
 
 if __name__ == '__main__':
-    sheep = Sheep(10.0, 0.5)
-    print(sheep.position)
-    sheep.move()
-    print(sheep.position)
+    sheep: [Sheep] = []
+    for i in range(10):
+        sheep.append([Sheep(10.0, 0.5)])
+
+    # wolf: Wolf = Wolf(1.0, sheep)
+    # print("Sh", sheep)
+    # wolf.select_move()
+    # sheep.move()
+    # print("Sh", sheep)
+    # wolf.select_move()
