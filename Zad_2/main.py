@@ -10,8 +10,7 @@ class Animal:
         pass
 
     def select_move(self):
-        moves = ["east", "west", "north", "south"]
-        return random.choice(moves)
+        pass
 
 
 class Sheep(Animal):
@@ -20,10 +19,15 @@ class Sheep(Animal):
         self.init_pos_limit: float = init_pos_limit
 
     def init_position(self):
-        self.position[0] = random.uniform(-self.init_pos_limit, self.init_pos_limit)
+        self.position[0]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
+
+    def select_move(self) -> str:
+        moves: [str] = ["east", "west", "north", "south"]
+        return random.choice(moves)
 
     def move(self):
-        selected_move = self.select_move()
+        selected_move: str = self.select_move()
+
 
 
 class Wolf(Animal):
