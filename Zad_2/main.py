@@ -51,12 +51,12 @@ class Simulation:
         sheep_position = []
         for s in self.sheep:
             if s.is_alive:
-                sheep_position.append(s.position)
+                sheep_position.append([s.position[0], s.position[1]])
             else:
                 sheep_position.append(None)
         self.list_to_write.append({
             "round_no": round_number,
-            "wolf_pos": self.wolf.position,
+            "wolf_pos": [self.wolf.position[0], self.wolf.position[1]],
             "sheep_pos": sheep_position,
         })
 
