@@ -80,8 +80,9 @@ class Simulation:
         self.list_to_write_csv_file.append([round_number, number_of_alive_sheep])
 
     def save_to_csv_file(self):
-        with open('alive.csv', mode='w') as alive_file:
+        with open('alive.csv', mode='w', newline='') as alive_file:
             alive_writer = csv.writer(alive_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONE)
+
             for round_number in range(self.rounds):
                 alive_writer.writerow(self.list_to_write_csv_file[round_number])
 
