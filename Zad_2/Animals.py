@@ -57,6 +57,7 @@ class Wolf(Animal):
         # return math.sqrt((int(one_game_sheep.position[0] - self.position[0])) ^ 2 + (int(
         #     one_game_sheep.position[1] - self.position[1])) ^ 2)
 
+# todo: coś mi się zdaje że ten wilk to się nie porusza tylko w jednym kierunku a może się poruszać po przekątnej
     def move(self):
         distance_to_sheep = [[], []]
         for s in self.game_sheep:
