@@ -83,7 +83,8 @@ class Wolf(Animal):
                 self.position[1] -= self.move_dist
 
 
-def show_information(round_number: int, wolf: Wolf, sheep):
+# Todo: trzeba jakoś przechowywać info, ktora owca w tej turze została zjedzona
+def show_information(round_number: int, wolf: Wolf, sheep: [Sheep], changes: [int]):
     print("Round number: ", round_number)
     print("Wolf position: (", round(wolf.position[0], 3), ", ", round(wolf.position[1], 3), ")")
     number_of_alive: int = 0
@@ -91,6 +92,7 @@ def show_information(round_number: int, wolf: Wolf, sheep):
         if s.is_alive:
             number_of_alive += 1
     print("Number of alive sheep: ", number_of_alive)
+    print("Index of the eaten sheep: ", changes)
     print("")
 
 
@@ -101,18 +103,21 @@ def perform_simulation(rounds: int, number_of_sheep: int, init_pos_limit: float,
         sheep.append(Sheep(init_pos_limit, sheep_move_dist))
     wolf: Wolf = Wolf(wolf_move_dist, sheep)
     i: int = 0
-    is_anyone_alive: int = True
-    show_information(i, wolf, sheep)
-    while i < rounds and is_anyone_alive:
+    changes: [int] = []
+    show_information(i, wolf, sheep, changes)
+    is_sheep_alive = [True] * number_of_sheep
+    while i < rounds and sum(is_sheep_alive) > 0:
         for j in sheep:
             j.move()
         wolf.move()
         i += 1
-        is_anyone_alive = False
-        for k in sheep:
-            if k.is_alive:
-                is_anyone_alive = True
-        show_information(i, wolf, sheep)
+        is_sheep_alive_in_round = [True] * number_of_sheep
+        for k in range(len(sheep)):
+            if not sheep[k].is_alive:
+                is_sheep_alive_in_round[k] = False
+        changes = [i for i in range(number_of_sheep) if is_sheep_alive_in_round[i] != is_sheep_alive[i]]
+        is_sheep_alive = is_sheep_alive_in_round
+        show_information(i, wolf, sheep, changes)
 
 
 if __name__ == '__main__':
