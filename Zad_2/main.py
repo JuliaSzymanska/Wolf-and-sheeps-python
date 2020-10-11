@@ -1,5 +1,5 @@
 import Animals
-
+import json
 
 class Simulation:
     def __init__(self, rounds: int, number_of_sheep: int, init_pos_limit: float, sheep_move_dist: float,
@@ -10,6 +10,7 @@ class Simulation:
         self.wolf: Animals.Wolf = Animals.Wolf(wolf_move_dist, self.sheep)
         self.changes: [int] = []
         self.rounds = rounds
+        self.list_to_write = []
 
     def initialize_sheep(self, number_of_sheep: int, init_pos_limit: float, sheep_move_dist: float):
         for i in range(number_of_sheep):
@@ -18,6 +19,7 @@ class Simulation:
     def perform_simulation(self):
         round_number: int = 0
         self.show_information(round_number)
+        self.save_list_to_write_to_file(round_number)
         is_sheep_alive = [True] * self.number_of_sheep
         while round_number < self.rounds and sum(is_sheep_alive) > 0:
             for one_sheep in self.sheep:
@@ -31,6 +33,8 @@ class Simulation:
             self.changes = [i for i in range(self.number_of_sheep) if is_sheep_alive_in_round[i] != is_sheep_alive[i]]
             is_sheep_alive = is_sheep_alive_in_round
             self.show_information(round_number)
+            self.save_list_to_write_to_file(round_number)
+        self.save_to_json_file()
 
     def show_information(self, round_number: int):
         print("Round number: ", round_number)
@@ -42,6 +46,23 @@ class Simulation:
         print("Number of alive sheep: ", number_of_alive)
         print("Index of the eaten sheep: ", self.changes)
         print("")
+
+    def save_list_to_write_to_file(self, round_number):
+        sheep_position = []
+        for s in self.sheep:
+            if s.is_alive:
+                sheep_position.append(s.position)
+            else:
+                sheep_position.append(None)
+        self.list_to_write.append({
+            "round_no": round_number,
+            "wolf_pos": self.wolf.position,
+            "sheep_pos": sheep_position,
+        })
+
+    def save_to_json_file(self):
+        with open('pos.json', 'w') as json_file:
+            json.dump(self.list_to_write, json_file)
 
 
 if __name__ == '__main__':
