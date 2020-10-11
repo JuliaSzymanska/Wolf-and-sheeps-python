@@ -61,8 +61,9 @@ class Simulation:
         })
 
     def save_to_json_file(self):
+        json_object = json.dumps(self.list_to_write, indent=3)
         with open('pos.json', 'w') as json_file:
-            json.dump(self.list_to_write, json_file)
+            json_file.write(json_object)
 
 
 if __name__ == '__main__':
