@@ -26,9 +26,7 @@ class Simulation:
     def perform_simulation(self):
 
         living_sheep_count = self.number_of_sheep
-        self.show_information()
-        self.append_to_json_list()
-        self.append_to_csv_list(living_sheep_count)
+        self.print_and_save(living_sheep_count)
 
         while self.round_num < self.rounds and living_sheep_count > 0:
 
@@ -40,12 +38,16 @@ class Simulation:
                 living_sheep_count -= 1
 
             self.round_num += 1
-            self.show_information()
-            self.append_to_json_list()
-            self.append_to_csv_list(living_sheep_count)
+            self.print_and_save(living_sheep_count)
 
         self.save_to_json_file()
         self.save_to_csv_file()
+
+    # zmien temu nazwe na cos z sensem, zdecydowanie nie umiem w nazwy
+    def print_and_save(self, living_sheep_count):
+        self.show_information()
+        self.append_to_json_list()
+        self.append_to_csv_list(living_sheep_count)
 
     def show_information(self,):
         print("Round number: ", self.round_num)
