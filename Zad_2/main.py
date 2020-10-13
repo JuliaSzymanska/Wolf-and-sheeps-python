@@ -12,8 +12,7 @@ class Simulation:
         self.sheep: [Animals.Sheep] = []
         self.initialize_sheep(number_of_sheep, init_pos_limit, sheep_move_dist)
         self.wolf: Animals.Wolf = Animals.Wolf(wolf_move_dist, self.sheep)
-        # todo rename var changes
-        self.changes: Union[int, None] = None
+        self.dead_sheep_index: Union[int, None] = None
         self.rounds = rounds
         self.list_to_write_json_file = []
         self.list_to_write_csv_file = []
@@ -26,25 +25,24 @@ class Simulation:
     def perform_simulation(self):
 
         living_sheep_count = self.number_of_sheep
-        self.print_and_save(living_sheep_count)
+        self.display_and_store_simulation_information(living_sheep_count)
 
         while self.round_num < self.rounds and living_sheep_count > 0:
 
             [x.move() for x in self.sheep]
 
-            self.changes = self.wolf.move()
+            self.dead_sheep_index = self.wolf.move()
 
-            if self.changes:
+            if self.dead_sheep_index:
                 living_sheep_count -= 1
 
             self.round_num += 1
-            self.print_and_save(living_sheep_count)
+            self.display_and_store_simulation_information(living_sheep_count)
 
         self.save_to_json_file()
         self.save_to_csv_file()
 
-    # zmien temu nazwe na cos z sensem, zdecydowanie nie umiem w nazwy
-    def print_and_save(self, living_sheep_count):
+    def display_and_store_simulation_information(self, living_sheep_count):
         self.show_information()
         self.append_to_json_list()
         self.append_to_csv_list(living_sheep_count)
@@ -57,8 +55,7 @@ class Simulation:
             if s.is_alive:
                 number_of_alive += 1
         print("Number of alive sheep: ", number_of_alive)
-        print("Index of the eaten sheep: ", self.changes)
-        print("")
+        print("Index of the eaten sheep: ", self.dead_sheep_index, "\n")
 
     def append_to_json_list(self):
         sheep_position: [[int, int]] = []
@@ -83,10 +80,10 @@ class Simulation:
 
     def save_to_csv_file(self):
         with open('alive.csv', mode='w', newline='') as alive_file:
-            alive_writer = csv.writer(alive_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONE)
+            csv_writer = csv.writer(alive_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONE)
 
             for round_number in range(self.rounds):
-                alive_writer.writerow(self.list_to_write_csv_file[round_number])
+                csv_writer.writerow(self.list_to_write_csv_file[round_number])
 
 
 if __name__ == '__main__':
