@@ -61,6 +61,12 @@ class Wolf(Animal):
 
     # todo: coś mi się zdaje że ten wilk to się nie porusza tylko w jednym kierunku a może się poruszać po przekątnej
     def move(self):
+        """
+        Finds closest sheep to the wolf.
+        If the sheep is closer than wolf's move distance the sheep dies.
+        If it's further the wolf moves in a straight line to the closest sheep.
+        :return: None
+        """
         distance_to_sheep = -1
         sheep_index = -1
 
@@ -74,8 +80,6 @@ class Wolf(Animal):
                     distance_to_sheep = current_dist
                     sheep_index = s
 
-        print(distance_to_sheep)
-
         if distance_to_sheep < self.move_dist:
             self.game_sheep[sheep_index].die()
             return
@@ -83,9 +87,11 @@ class Wolf(Animal):
         x_pos_sheep = self.game_sheep[sheep_index].position[0]
         y_pos_sheep = self.game_sheep[sheep_index].position[1]
 
+        # calculate coefficients for x and y pos change
         norm: float = math.sqrt((x_pos_sheep - self.position[0]) ** 2 + (y_pos_sheep - self.position[1]) ** 2)
         dir_x = (x_pos_sheep - self.position[0]) / norm
         dir_y = (y_pos_sheep - self.position[1]) / norm
 
+        # change x and y position of the wolf
         self.position[0] = self.position[0] + self.move_dist * dir_x
         self.position[1] = self.position[1] + self.move_dist * dir_y
