@@ -12,6 +12,7 @@ class Simulation:
         self.sheep: [Animals.Sheep] = []
         self.initialize_sheep(number_of_sheep, init_pos_limit, sheep_move_dist)
         self.wolf: Animals.Wolf = Animals.Wolf(wolf_move_dist, self.sheep)
+        # todo rename var changes
         self.changes: Union[int, None] = None
         self.rounds = rounds
         self.list_to_write_json_file = []
