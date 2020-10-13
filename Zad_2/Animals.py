@@ -61,15 +61,20 @@ class Wolf(Animal):
 
     # todo: coś mi się zdaje że ten wilk to się nie porusza tylko w jednym kierunku a może się poruszać po przekątnej
     def move(self):
-        distance_to_sheep = self.calculate_distance(self.game_sheep[0])
-        sheep_index = 0
+        distance_to_sheep = -1
+        sheep_index = -1
 
-        for s in self.game_sheep:
-            if s.is_alive:
-                current_dist = self.calculate_distance(s)
+        for s in range(len(self.game_sheep)):
+            if self.game_sheep[s].is_alive:
+                if sheep_index == -1:
+                    sheep_index = s
+                    distance_to_sheep = self.calculate_distance(self.game_sheep[s])
+                current_dist = self.calculate_distance(self.game_sheep[s])
                 if current_dist < distance_to_sheep:
                     distance_to_sheep = current_dist
-                    sheep_index = self.game_sheep.index(s)
+                    sheep_index = s
+
+        print(distance_to_sheep)
 
         if distance_to_sheep < self.move_dist:
             self.game_sheep[sheep_index].die()
