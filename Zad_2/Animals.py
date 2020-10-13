@@ -75,15 +75,12 @@ class Wolf(Animal):
             self.game_sheep[sheep_index].die()
             return
 
-        x_diff = self.position[0] - self.game_sheep[sheep_index].position[0]
-        y_diff = self.position[1] - self.game_sheep[sheep_index].position[1]
-        if math.fabs(x_diff) <= y_diff:
-            if x_diff < 0:
-                self.position[0] += self.move_dist
-            else:
-                self.position[0] -= self.move_dist
-        else:
-            if y_diff < 0:
-                self.position[1] += self.move_dist
-            else:
-                self.position[1] -= self.move_dist
+        x_pos_sheep = self.game_sheep[sheep_index].position[0]
+        y_pos_sheep = self.game_sheep[sheep_index].position[1]
+
+        norm: float = math.sqrt((x_pos_sheep - self.position[0]) ** 2 + (y_pos_sheep - self.position[1]) ** 2)
+        dir_x = (x_pos_sheep - self.position[0]) / norm
+        dir_y = (y_pos_sheep - self.position[1]) / norm
+
+        self.position[0] = self.position[0] + self.move_dist * dir_x
+        self.position[1] = self.position[1] + self.move_dist * dir_y
