@@ -50,26 +50,31 @@ class Sheep(Animal):
 class Wolf(Animal):
     def __init__(self, move_dist, game_sheep):
         super().__init__(move_dist)
-        self.game_sheep: [Sheep] = game_sheep
+        # todo fix (check if type is list of type?)
+        if type(game_sheep[0]) is Sheep:
+            self.game_sheep: [Sheep] = game_sheep
 
     def calculate_distance(self, one_game_sheep: Sheep):
         return distance.euclidean([self.position], [one_game_sheep.position])
         # return math.sqrt((int(one_game_sheep.position[0] - self.position[0])) ^ 2 + (int(
         #     one_game_sheep.position[1] - self.position[1])) ^ 2)
 
-# todo: coś mi się zdaje że ten wilk to się nie porusza tylko w jednym kierunku a może się poruszać po przekątnej
+    # todo: coś mi się zdaje że ten wilk to się nie porusza tylko w jednym kierunku a może się poruszać po przekątnej
     def move(self):
-        distance_to_sheep = [[], []]
+        distance_to_sheep = self.calculate_distance(self.game_sheep[0])
+        sheep_index = 0
+
         for s in self.game_sheep:
             if s.is_alive:
-                distance_to_sheep[0].append(self.calculate_distance(s))
-                distance_to_sheep[1].append(self.game_sheep.index(s))
+                current_dist = self.calculate_distance(s)
+                if current_dist < distance_to_sheep:
+                    distance_to_sheep = current_dist
+                    sheep_index = self.game_sheep.index(s)
 
-        sheep_index = distance_to_sheep[1][distance_to_sheep[0].index(min(distance_to_sheep[0]))]
-        distance_index = distance_to_sheep[0].index(min(distance_to_sheep[0]))
-        if distance_to_sheep[0][distance_index] < self.move_dist:
+        if distance_to_sheep < self.move_dist:
             self.game_sheep[sheep_index].die()
             return
+
         x_diff = self.position[0] - self.game_sheep[sheep_index].position[0]
         y_diff = self.position[1] - self.game_sheep[sheep_index].position[1]
         if math.fabs(x_diff) <= y_diff:
