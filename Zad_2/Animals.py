@@ -77,7 +77,7 @@ class Wolf(Animal):
         Finds closest sheep to the wolf.
         If the sheep is closer than wolf's move distance the sheep dies.
         If it's further the wolf moves in a straight line to the closest sheep.
-        :return: None
+        :return: Did sheep die
         """
         distance_to_sheep = -1
         sheep_index = -1
@@ -94,7 +94,7 @@ class Wolf(Animal):
 
         if distance_to_sheep < self.move_dist:
             self.game_sheep[sheep_index].die()
-            return
+            return sheep_index
 
         x_pos_sheep = self.game_sheep[sheep_index].get_x_pos()
         y_pos_sheep = self.game_sheep[sheep_index].get_y_pos()
@@ -107,4 +107,5 @@ class Wolf(Animal):
         # change x and y position of the wolf
         self.set_x_pos(self.get_x_pos() + self.move_dist * dir_x)
         self.set_y_pos(self.get_y_pos() + self.move_dist * dir_y)
+        return False
 

@@ -1,3 +1,5 @@
+from typing import Union
+
 import Animals
 import json
 import csv
@@ -10,7 +12,7 @@ class Simulation:
         self.sheep: [Animals.Sheep] = []
         self.initialize_sheep(number_of_sheep, init_pos_limit, sheep_move_dist)
         self.wolf: Animals.Wolf = Animals.Wolf(wolf_move_dist, self.sheep)
-        self.changes: [int] = []
+        self.changes: Union[int, None] = None
         self.rounds = rounds
         self.list_to_write_json_file = []
         self.list_to_write_csv_file = []
@@ -21,24 +23,26 @@ class Simulation:
             self.sheep.append(Animals.Sheep(init_pos_limit, sheep_move_dist))
 
     def perform_simulation(self):
-        is_sheep_alive = [True] * self.number_of_sheep
+
+        living_sheep_count = self.number_of_sheep
         self.show_information()
-        self.save_list_to_write_to_file()
-        self.save_list_to_csv_file(is_sheep_alive)
-        while self.round_num < self.rounds and sum(is_sheep_alive) > 0:
-            for one_sheep in self.sheep:
-                one_sheep.move()
-            self.wolf.move()
+        self.append_to_json_list()
+        self.append_to_csv_list(living_sheep_count)
+
+        while self.round_num < self.rounds and living_sheep_count > 0:
+
+            [x.move() for x in self.sheep]
+
+            self.changes = self.wolf.move()
+
+            if self.changes:
+                living_sheep_count -= 1
+
             self.round_num += 1
-            is_sheep_alive_in_round = [True] * self.number_of_sheep
-            for index_of_sheep in range(self.number_of_sheep):
-                if not self.sheep[index_of_sheep].is_alive:
-                    is_sheep_alive_in_round[index_of_sheep] = False
-            self.changes = [i for i in range(self.number_of_sheep) if is_sheep_alive_in_round[i] != is_sheep_alive[i]]
-            is_sheep_alive = is_sheep_alive_in_round
             self.show_information()
-            self.save_list_to_write_to_file()
-            self.save_list_to_csv_file(is_sheep_alive)
+            self.append_to_json_list()
+            self.append_to_csv_list(living_sheep_count)
+
         self.save_to_json_file()
         self.save_to_csv_file()
 
@@ -53,7 +57,7 @@ class Simulation:
         print("Index of the eaten sheep: ", self.changes)
         print("")
 
-    def save_list_to_write_to_file(self):
+    def append_to_json_list(self):
         sheep_position: [[int, int]] = []
         for s in self.sheep:
             if s.is_alive:
@@ -71,12 +75,7 @@ class Simulation:
         with open('pos.json', 'w') as json_file:
             json_file.write(json_object)
 
-    def save_list_to_csv_file(self, is_sheep_alive: [bool]):
-        number_of_alive_sheep: int = 0
-        for i in is_sheep_alive:
-            if i:
-                number_of_alive_sheep += 1
-
+    def append_to_csv_list(self, number_of_alive_sheep: int):
         self.list_to_write_csv_file.append([self.round_num, number_of_alive_sheep])
 
     def save_to_csv_file(self):
