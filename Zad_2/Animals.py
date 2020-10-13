@@ -35,13 +35,13 @@ class Sheep(Animal):
         self.position[0]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
         self.position[1]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
 
-    def select_move(self) -> str:
-        moves: [str] = ["east", "west", "north", "south"]
-        return random.choice(moves)
-
     def move(self):
+        def select_move() -> str:
+            moves: [str] = ["east", "west", "north", "south"]
+            return random.choice(moves)
+
         if self.is_alive:
-            selected_move: str = self.select_move()
+            selected_move: str = select_move()
             if selected_move == "east":
                 self.position[0] += self.move_dist
                 return
@@ -107,4 +107,3 @@ class Wolf(Animal):
         self.set_x_pos(self.get_x_pos() + self.move_dist * dir_x)
         self.set_y_pos(self.get_y_pos() + self.move_dist * dir_y)
         return False
-
