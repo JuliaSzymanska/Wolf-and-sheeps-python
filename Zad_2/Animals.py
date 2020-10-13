@@ -11,6 +11,18 @@ class Animal:
     def move(self):
         pass
 
+    def get_x_pos(self):
+        return self.position[0]
+
+    def get_y_pos(self):
+        return self.position[1]
+
+    def set_x_pos(self, x: float):
+        self.position[0] = x
+
+    def set_y_pos(self, y: float):
+        self.position[1] = y
+
 
 class Sheep(Animal):
     def __init__(self, init_pos_limit, move_dist):
@@ -84,14 +96,15 @@ class Wolf(Animal):
             self.game_sheep[sheep_index].die()
             return
 
-        x_pos_sheep = self.game_sheep[sheep_index].position[0]
-        y_pos_sheep = self.game_sheep[sheep_index].position[1]
+        x_pos_sheep = self.game_sheep[sheep_index].get_x_pos()
+        y_pos_sheep = self.game_sheep[sheep_index].get_y_pos()
 
         # calculate coefficients for x and y pos change
-        norm: float = math.sqrt((x_pos_sheep - self.position[0]) ** 2 + (y_pos_sheep - self.position[1]) ** 2)
-        dir_x = (x_pos_sheep - self.position[0]) / norm
-        dir_y = (y_pos_sheep - self.position[1]) / norm
+        norm: float = math.sqrt((x_pos_sheep - self.get_x_pos()) ** 2 + (y_pos_sheep - self.get_y_pos()) ** 2)
+        dir_x = (x_pos_sheep - self.get_x_pos()) / norm
+        dir_y = (y_pos_sheep - self.get_y_pos()) / norm
 
         # change x and y position of the wolf
-        self.position[0] = self.position[0] + self.move_dist * dir_x
-        self.position[1] = self.position[1] + self.move_dist * dir_y
+        self.set_x_pos(self.get_x_pos() + self.move_dist * dir_x)
+        self.set_y_pos(self.get_y_pos() + self.move_dist * dir_y)
+
