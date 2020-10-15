@@ -1,6 +1,7 @@
 import argparse
 import logging
 import configparser
+import os
 
 CONFIG_FILE = ''
 SAVE_DIR = './'
@@ -89,28 +90,30 @@ def configuration(parser):
     }
 
     if args.config:
-        #todo sprawdzic czy plik istnieje
         CONFIG_FILE += args.config + ".ini"
-        config = configparser.ConfigParser()
-        config.read(CONFIG_FILE)
-        if float(config['Terrain']['InitPosLimit']) > 0:
-            INITPOSLIMIT = float(config['Terrain']['InitPosLimit'])
+        if os.path.isfile(CONFIG_FILE):
+            config = configparser.ConfigParser()
+            config.read(CONFIG_FILE)
+            if float(config['Terrain']['InitPosLimit']) > 0:
+                INITPOSLIMIT = float(config['Terrain']['InitPosLimit'])
+            else:
+                raise ValueError('InitPosLimit should be greater than 0.')
+            if float(config['Movement']['SheepMoveDist']) > 0:
+                SHEEPMOVEDIST = float(config['Movement']['SheepMoveDist'])
+            else:
+                raise ValueError('SheepMoveDist should be greater than 0.')
+            if float(config['Movement']['WolfMoveDist']) > 0:
+                WOLFMOVEDIST = float(config['Movement']['WolfMoveDist'])
+            else:
+                raise ValueError('WolfMoveDist should be greater than 0.')
         else:
-            raise ValueError('InitPosLimit should be greater than 0.')
-        if float(config['Movement']['SheepMoveDist']) > 0:
-            SHEEPMOVEDIST = float(config['Movement']['SheepMoveDist'])
-        else:
-            raise ValueError('SheepMoveDist should be greater than 0.')
-        if float(config['Movement']['WolfMoveDist']) > 0:
-            WOLFMOVEDIST = float(config['Movement']['WolfMoveDist'])
-        else:
-            raise ValueError('WolfMoveDist should be greater than 0.')
+            raise FileNotFoundError('File does not exist')
 
     if args.dir:
-        #todo zrobic ta czesc
+        # todo zrobic ta czesc
         SAVE_DIR = args.dir
 
-    #todo tutaj tez to zrobic
+    # todo tutaj tez to zrobic
     # if args.log:
     #     if args.log not in levels.values():
     #         print("It is not a log level.")
