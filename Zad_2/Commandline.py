@@ -88,6 +88,7 @@ def configuration(parser):
     }
 
     if args.config:
+        #todo sprawdzic czy plik istnieje
         CONFIG_FILE += args.config + ".ini"
         config = configparser.ConfigParser()
         config.read(CONFIG_FILE)
@@ -105,8 +106,10 @@ def configuration(parser):
             print("Rzucić wyjatek")
 
     if args.dir:
+        #todo zrobic ta czesc
         SAVE_DIR = args.dir
 
+    #todo tutaj tez to zrobic
     # if args.log:
     #     if args.log not in levels.values():
     #         print("It is not a log level.")
@@ -115,10 +118,13 @@ def configuration(parser):
         if args.rounds > 0:
             ROUNDS = args.rounds
         else:
+            #todo tu ma byc wyjatek chyba
             print("Value should be greater than 0.")
 
     if args.sheep:
         if args.sheep > 0:
             SHEEP = args.sheep
         else:
+            #todo tutaj tez chyba ma byc wyjatek
             print("Value should be greater than 0.")
+            #todo dla waita tez cos trzeba napisac
