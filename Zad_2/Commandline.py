@@ -3,7 +3,6 @@ import logging
 import configparser
 import os
 
-CONFIG_FILE = ''
 SAVE_DIR = './'
 INITPOSLIMIT = 10.0
 SHEEPMOVEDIST = 0.5
@@ -78,7 +77,7 @@ def init_argparse() -> argparse.ArgumentParser:
 
 
 def configuration(parser):
-    global CONFIG_FILE, SAVE_DIR, ROUNDS, SHEEP, INITPOSLIMIT, SHEEPMOVEDIST, WOLFMOVEDIST, WAIT
+    global SAVE_DIR, ROUNDS, SHEEP, INITPOSLIMIT, SHEEPMOVEDIST, WOLFMOVEDIST, WAIT
     args, remainder_argv = parser.parse_known_args()
 
     levels = {
@@ -90,10 +89,10 @@ def configuration(parser):
     }
 
     if args.config:
-        CONFIG_FILE += args.config + ".ini"
-        if os.path.isfile(CONFIG_FILE):
+        config_file = args.config + ".ini"
+        if os.path.exists(config_file) and os.path.isfile(config_file):
             config = configparser.ConfigParser()
-            config.read(CONFIG_FILE)
+            config.read(config_file)
             if float(config['Terrain']['InitPosLimit']) > 0:
                 INITPOSLIMIT = float(config['Terrain']['InitPosLimit'])
             else:
@@ -108,10 +107,19 @@ def configuration(parser):
                 raise ValueError('WolfMoveDist should be greater than 0.')
         else:
             raise FileNotFoundError('File does not exist')
-
+    # tworzy się katalog, ale pliki zapisuja się w domyślnej ścieżce, a katalog tworzy sie na koniec programu.
+    # Natomiast jeśli katalog istnieje to działa poprawnie
     if args.dir:
-        # todo zrobic ta czesc
-        SAVE_DIR = args.dir
+        if os.path.exists(args.dir) and os.path.isdir(args.dir):
+            SAVE_DIR = args.dir
+        else:
+            try:
+                os.mkdir(args.dir)
+                SAVE_DIR = args.dir
+            except OSError:
+                raise OSError('Creation of the directory %s failed ' % SAVE_DIR)
+            else:
+                raise OSError('Successfully created the directory %s ' % SAVE_DIR)
 
     # todo tutaj tez to zrobic
     # if args.log:

@@ -79,14 +79,14 @@ class Simulation:
 
     def save_to_json_file(self):
         json_object = json.dumps(self.list_to_write_json_file, indent=3)
-        with open('pos.json', 'w') as json_file:
+        with open(Commandline.SAVE_DIR + 'pos.json', 'w') as json_file:
             json_file.write(json_object)
 
     def append_to_csv_list(self, number_of_alive_sheep: int):
         self.list_to_write_csv_file.append([self.round_num, number_of_alive_sheep])
 
     def save_to_csv_file(self):
-        with open('alive.csv', mode='w', newline='') as alive_file:
+        with open(Commandline.SAVE_DIR + 'alive.csv', mode='w', newline='') as alive_file:
             csv_writer = csv.writer(alive_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONE)
 
             for round_number in range(self.rounds):
@@ -99,3 +99,4 @@ if __name__ == '__main__':
     simulation = Simulation(Commandline.ROUNDS, Commandline.SHEEP, Commandline.INITPOSLIMIT, Commandline.SHEEPMOVEDIST,
                             Commandline.WOLFMOVEDIST)
     simulation.perform_simulation()
+    print(Commandline.SAVE_DIR)
