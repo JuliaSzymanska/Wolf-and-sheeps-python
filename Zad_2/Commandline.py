@@ -39,13 +39,6 @@ def init_argparse() -> argparse.ArgumentParser:
             'enable logging, levels: DEBUG, INFO, WARNING, ERROR, CRITICAL'
             'Example --log DEBUG')
     )
-    levels = {
-        'CRITICAL': logging.CRITICAL,
-        'ERROR': logging.ERROR,
-        'WARNING': logging.WARNING,
-        'INFO': logging.INFO,
-        'DEBUG': logging.DEBUG
-    }
 
     parser.add_argument(
         '-r',
@@ -82,17 +75,32 @@ def configuration(parser):
     global CONFIG_FILE, SAVE_DIR, ROUNDS, SHEEP
     args, remainder_argv = parser.parse_known_args()
 
+    levels = {
+        'CRITICAL': logging.CRITICAL,
+        'ERROR': logging.ERROR,
+        'WARNING': logging.WARNING,
+        'INFO': logging.INFO,
+        'DEBUG': logging.DEBUG
+    }
+
     if args.config:
         CONFIG_FILE = args.config
 
-    elif args.dir:
+    if args.dir:
         SAVE_DIR = args.dir
 
-    # elif args.log:
-    elif args.rounds:
-        ROUNDS = args.rounds
+    # if args.log:
+    #     if args.log not in levels.values():
+    #         print("It is not a log level.")
 
-    elif args.sheep:
-        SHEEP = args.sheep
+    if args.rounds:
+        if args.rounds > 0:
+            ROUNDS = args.rounds
+        else:
+            print("Value should be greater than 0.")
 
-
+    if args.sheep:
+        if args.sheep > 0:
+            SHEEP = args.sheep
+        else:
+            print("Value should be greater than 0.")
