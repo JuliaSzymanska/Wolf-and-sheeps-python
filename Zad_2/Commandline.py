@@ -122,16 +122,3 @@ def configuration(parser):
             SHEEP = args.sheep
         else:
             print("Value should be greater than 0.")
-
-# def ConfigSectionMap(section, config):
-#     dict1 = {}
-#     options = config.options()
-#     for option in options:
-#         try:
-#             dict1[option] = config.get(section, option)
-#             if dict1[option] == -1:
-#                 print("skip: %s" % option)
-#         except:
-#             print("exception on %s!" % option)
-#             dict1[option] = None
-#     return dict1
