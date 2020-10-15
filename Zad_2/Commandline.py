@@ -1,6 +1,5 @@
 import argparse
 import logging
-import configparser
 import os
 
 SAVE_DIR = './'
@@ -91,6 +90,7 @@ def configuration(parser):
     if args.config:
         config_file = args.config + ".ini"
         if os.path.exists(config_file) and os.path.isfile(config_file):
+            import configparser
             config = configparser.ConfigParser()
             config.read(config_file)
             if float(config['Terrain']['InitPosLimit']) > 0:
@@ -107,24 +107,28 @@ def configuration(parser):
                 raise ValueError('WolfMoveDist should be greater than 0.')
         else:
             raise FileNotFoundError('File does not exist')
+
     # tworzy się katalog, ale pliki zapisuja się w domyślnej ścieżce, a katalog tworzy sie na koniec programu.
     # Natomiast jeśli katalog istnieje to działa poprawnie
     if args.dir:
         if os.path.exists(args.dir) and os.path.isdir(args.dir):
-            SAVE_DIR = args.dir
+            SAVE_DIR = args.dir + '/'
         else:
             try:
                 os.mkdir(args.dir)
-                SAVE_DIR = args.dir
+                SAVE_DIR = args.dir + '/'
             except OSError:
                 raise OSError('Creation of the directory %s failed ' % SAVE_DIR)
             else:
                 raise OSError('Successfully created the directory %s ' % SAVE_DIR)
 
-    # todo tutaj tez to zrobic
-    # if args.log:
-    #     if args.log not in levels.values():
-    #         print("It is not a log level.")
+    if args.log:
+        if args.log not in levels.keys():
+            raise ValueError('This log level does not exist.')
+        else:
+            logging.basicConfig(filename=SAVE_DIR + 'chase.log',
+                                filemode='w',
+                                level=levels[args.log])
 
     if args.rounds:
         if args.rounds > 0:
@@ -135,6 +139,7 @@ def configuration(parser):
     if args.sheep:
         if args.sheep > 0:
             SHEEP = args.sheep
+
         else:
             raise ValueError('Value should be greater than 0.')
 

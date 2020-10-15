@@ -1,5 +1,6 @@
 import msvcrt
 from typing import Union
+import logging
 
 from pip._vendor.distlib.compat import raw_input
 
@@ -96,7 +97,8 @@ class Simulation:
 if __name__ == '__main__':
     parser = Commandline.init_argparse()
     parser.parse_args()
+    logging.warning('Test on warning')
     simulation = Simulation(Commandline.ROUNDS, Commandline.SHEEP, Commandline.INITPOSLIMIT, Commandline.SHEEPMOVEDIST,
                             Commandline.WOLFMOVEDIST)
     simulation.perform_simulation()
-    print(Commandline.SAVE_DIR)
+    logging.info('Test on info')
