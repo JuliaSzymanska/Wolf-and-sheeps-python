@@ -1,9 +1,13 @@
 import argparse
 import logging
+import configparser
 
 CONFIG_FILE = ''
 SAVE_DIR = './'
-ROUNDS = 50
+INITPOSLIMIT = 10.0
+SHEEPMOVEDIST = 0.5
+WOLFMOVEDIST = 1.0
+ROUNDS = 5
 SHEEP = 15
 
 
@@ -72,7 +76,7 @@ def init_argparse() -> argparse.ArgumentParser:
 
 
 def configuration(parser):
-    global CONFIG_FILE, SAVE_DIR, ROUNDS, SHEEP
+    global CONFIG_FILE, SAVE_DIR, ROUNDS, SHEEP, INITPOSLIMIT, SHEEPMOVEDIST, WOLFMOVEDIST
     args, remainder_argv = parser.parse_known_args()
 
     levels = {
@@ -84,7 +88,21 @@ def configuration(parser):
     }
 
     if args.config:
-        CONFIG_FILE = args.config
+        CONFIG_FILE += args.config + ".ini"
+        config = configparser.ConfigParser()
+        config.read(CONFIG_FILE)
+        if float(config['Terrain']['InitPosLimit']) > 0:
+            INITPOSLIMIT = float(config['Terrain']['InitPosLimit'])
+        else:
+            print("Rzucić wyjatek")
+        if float(config['Movement']['SheepMoveDist']) > 0:
+            SHEEPMOVEDIST = float(config['Movement']['SheepMoveDist'])
+        else:
+            print("Rzucić wyjatek")
+        if float(config['Movement']['WolfMoveDist']) > 0:
+            WOLFMOVEDIST = float(config['Movement']['WolfMoveDist'])
+        else:
+            print("Rzucić wyjatek")
 
     if args.dir:
         SAVE_DIR = args.dir
@@ -104,3 +122,16 @@ def configuration(parser):
             SHEEP = args.sheep
         else:
             print("Value should be greater than 0.")
+
+# def ConfigSectionMap(section, config):
+#     dict1 = {}
+#     options = config.options()
+#     for option in options:
+#         try:
+#             dict1[option] = config.get(section, option)
+#             if dict1[option] == -1:
+#                 print("skip: %s" % option)
+#         except:
+#             print("exception on %s!" % option)
+#             dict1[option] = None
+#     return dict1

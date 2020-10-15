@@ -90,5 +90,6 @@ class Simulation:
 if __name__ == '__main__':
     parser = Commandline.init_argparse()
     parser.parse_args()
-    simulation = Simulation(Commandline.ROUNDS, Commandline.SHEEP, 10.0, 0.5, 1.0)
+    simulation = Simulation(Commandline.ROUNDS, Commandline.SHEEP, Commandline.INITPOSLIMIT, Commandline.SHEEPMOVEDIST,
+                            Commandline.WOLFMOVEDIST)
     simulation.perform_simulation()
