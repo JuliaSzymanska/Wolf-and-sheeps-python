@@ -122,6 +122,7 @@ def configuration(parser):
             else:
                 raise OSError('Successfully created the directory %s ' % SAVE_DIR)
 
+    #todo: trzeba dorobić info i debug, w poleceniu są wytyczne, mamy loggowac info z programi
     if args.log:
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')
