@@ -96,15 +96,15 @@ def configuration(parser):
         if float(config['Terrain']['InitPosLimit']) > 0:
             INITPOSLIMIT = float(config['Terrain']['InitPosLimit'])
         else:
-            print("Rzucić wyjatek")
+            raise ValueError('InitPosLimit should be greater than 0.')
         if float(config['Movement']['SheepMoveDist']) > 0:
             SHEEPMOVEDIST = float(config['Movement']['SheepMoveDist'])
         else:
-            print("Rzucić wyjatek")
+            raise ValueError('SheepMoveDist should be greater than 0.')
         if float(config['Movement']['WolfMoveDist']) > 0:
             WOLFMOVEDIST = float(config['Movement']['WolfMoveDist'])
         else:
-            print("Rzucić wyjatek")
+            raise ValueError('WolfMoveDist should be greater than 0.')
 
     if args.dir:
         #todo zrobic ta czesc
@@ -119,15 +119,13 @@ def configuration(parser):
         if args.rounds > 0:
             ROUNDS = args.rounds
         else:
-            #todo tu ma byc wyjatek chyba
-            print("Value should be greater than 0.")
+            raise ValueError('Value should be greater than 0.')
 
     if args.sheep:
         if args.sheep > 0:
             SHEEP = args.sheep
         else:
-            #todo tutaj tez chyba ma byc wyjatek
-            print("Value should be greater than 0.")
+            raise ValueError('Value should be greater than 0.')
 
     if args.wait:
         WAIT = True
