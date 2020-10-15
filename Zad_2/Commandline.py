@@ -9,6 +9,7 @@ SHEEPMOVEDIST = 0.5
 WOLFMOVEDIST = 1.0
 ROUNDS = 5
 SHEEP = 15
+WAIT = False
 
 
 def init_argparse() -> argparse.ArgumentParser:
@@ -76,7 +77,7 @@ def init_argparse() -> argparse.ArgumentParser:
 
 
 def configuration(parser):
-    global CONFIG_FILE, SAVE_DIR, ROUNDS, SHEEP, INITPOSLIMIT, SHEEPMOVEDIST, WOLFMOVEDIST
+    global CONFIG_FILE, SAVE_DIR, ROUNDS, SHEEP, INITPOSLIMIT, SHEEPMOVEDIST, WOLFMOVEDIST, WAIT
     args, remainder_argv = parser.parse_known_args()
 
     levels = {
@@ -127,4 +128,6 @@ def configuration(parser):
         else:
             #todo tutaj tez chyba ma byc wyjatek
             print("Value should be greater than 0.")
-            #todo dla waita tez cos trzeba napisac
+
+    if args.wait:
+        WAIT = True

@@ -1,4 +1,7 @@
+import msvcrt
 from typing import Union
+
+from pip._vendor.distlib.compat import raw_input
 
 import Animals
 import Commandline
@@ -39,6 +42,9 @@ class Simulation:
 
             self.round_num += 1
             self.display_and_store_simulation_information(living_sheep_count)
+            if Commandline.WAIT and (self.round_num < self.rounds and living_sheep_count > 0):
+                print("Press any key to continue...")
+                msvcrt.getch()
 
         self.save_to_json_file()
         self.save_to_csv_file()
