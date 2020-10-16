@@ -1,13 +1,12 @@
+import csv
+import json
+import logging
 import msvcrt
 from typing import Union
-import logging
-
-from pip._vendor.distlib.compat import raw_input
 
 import Animals
 import Commandline
-import json
-import csv
+import Config
 
 
 class Simulation:
@@ -43,7 +42,7 @@ class Simulation:
 
             self.round_num += 1
             self.display_and_store_simulation_information(living_sheep_count)
-            if Commandline.WAIT and (self.round_num < self.rounds and living_sheep_count > 0):
+            if Config.WAIT and (self.round_num < self.rounds and living_sheep_count > 0):
                 print("Press any key to continue...")
                 msvcrt.getch()
 
@@ -80,14 +79,14 @@ class Simulation:
 
     def save_to_json_file(self):
         json_object = json.dumps(self.list_to_write_json_file, indent=3)
-        with open(Commandline.SAVE_DIR + 'pos.json', 'w') as json_file:
+        with open(Config.SAVE_DIR + 'pos.json', 'w') as json_file:
             json_file.write(json_object)
 
     def append_to_csv_list(self, number_of_alive_sheep: int):
         self.list_to_write_csv_file.append([self.round_num, number_of_alive_sheep])
 
     def save_to_csv_file(self):
-        with open(Commandline.SAVE_DIR + 'alive.csv', mode='w', newline='') as alive_file:
+        with open(Config.SAVE_DIR + 'alive.csv', mode='w', newline='') as alive_file:
             csv_writer = csv.writer(alive_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONE)
 
             for round_number in range(self.rounds):
@@ -98,7 +97,7 @@ if __name__ == '__main__':
     parser = Commandline.init_argparse()
     parser.parse_args()
     logging.warning('Test on warning')
-    simulation = Simulation(Commandline.ROUNDS, Commandline.SHEEP, Commandline.INITPOSLIMIT, Commandline.SHEEPMOVEDIST,
-                            Commandline.WOLFMOVEDIST)
+    simulation = Simulation(Config.ROUNDS, Config.SHEEP, Config.INIT_POS_LIMIT, Config.SHEEP_MOVE_DIST,
+                            Config.WOLF_MOVE_DIST)
     simulation.perform_simulation()
     logging.info('Test on info')

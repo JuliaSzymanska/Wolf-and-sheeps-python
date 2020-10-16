@@ -1,14 +1,8 @@
 import argparse
 import logging
 import os
+import Config
 
-SAVE_DIR = './'
-INITPOSLIMIT = 10.0
-SHEEPMOVEDIST = 0.5
-WOLFMOVEDIST = 1.0
-ROUNDS = 5
-SHEEP = 15
-WAIT = False
 
 
 def init_argparse() -> argparse.ArgumentParser:
@@ -76,7 +70,7 @@ def init_argparse() -> argparse.ArgumentParser:
 
 
 def configuration(parser):
-    global SAVE_DIR, ROUNDS, SHEEP, INITPOSLIMIT, SHEEPMOVEDIST, WOLFMOVEDIST, WAIT
+
     args, remainder_argv = parser.parse_known_args()
 
     levels = {
@@ -94,15 +88,15 @@ def configuration(parser):
             config = configparser.ConfigParser()
             config.read(config_file)
             if float(config['Terrain']['InitPosLimit']) > 0:
-                INITPOSLIMIT = float(config['Terrain']['InitPosLimit'])
+                Config.INIT_POS_LIMIT = float(config['Terrain']['InitPosLimit'])
             else:
                 raise ValueError('InitPosLimit should be greater than 0.')
             if float(config['Movement']['SheepMoveDist']) > 0:
-                SHEEPMOVEDIST = float(config['Movement']['SheepMoveDist'])
+                Config.SHEEP_MOVE_DIST = float(config['Movement']['SheepMoveDist'])
             else:
                 raise ValueError('SheepMoveDist should be greater than 0.')
             if float(config['Movement']['WolfMoveDist']) > 0:
-                WOLFMOVEDIST = float(config['Movement']['WolfMoveDist'])
+                Config.WOLF_MOVE_DIST = float(config['Movement']['WolfMoveDist'])
             else:
                 raise ValueError('WolfMoveDist should be greater than 0.')
         else:
@@ -112,37 +106,36 @@ def configuration(parser):
     # Natomiast jeśli katalog istnieje to działa poprawnie
     if args.dir:
         if os.path.exists(args.dir) and os.path.isdir(args.dir):
-            SAVE_DIR = args.dir + '/'
+            Config.SAVE_DIR = args.dir + '/'
         else:
             try:
                 os.mkdir(args.dir)
-                SAVE_DIR = args.dir + '/'
+                Config.SAVE_DIR = args.dir + '/'
             except OSError:
-                raise OSError('Creation of the directory %s failed ' % SAVE_DIR)
+                raise OSError('Creation of the directory %s failed ' % Config.SAVE_DIR)
             else:
-                raise OSError('Successfully created the directory %s ' % SAVE_DIR)
+                raise OSError('Successfully created the directory %s ' % Config.SAVE_DIR)
 
-    #todo: trzeba dorobić info i debug, w poleceniu są wytyczne, mamy loggowac info z programi
+    # todo: trzeba dorobić info i debug, w poleceniu są wytyczne, mamy loggowac info z programi
     if args.log:
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')
         else:
-            logging.basicConfig(filename=SAVE_DIR + 'chase.log',
+            logging.basicConfig(filename=Config.SAVE_DIR + 'chase.log',
                                 filemode='w',
                                 level=levels[args.log])
 
     if args.rounds:
         if args.rounds > 0:
-            ROUNDS = args.rounds
+            Config.ROUNDS = args.rounds
         else:
             raise ValueError('Value should be greater than 0.')
 
     if args.sheep:
         if args.sheep > 0:
-            SHEEP = args.sheep
-
+            Config.SHEEP = args.sheep
         else:
             raise ValueError('Value should be greater than 0.')
 
     if args.wait:
-        WAIT = True
+        Config.WAIT = True
