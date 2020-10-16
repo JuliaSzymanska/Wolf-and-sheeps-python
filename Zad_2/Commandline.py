@@ -4,7 +4,6 @@ import os
 import Config
 
 
-
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(add_help=True)
     parser.add_argument(
@@ -70,7 +69,6 @@ def init_argparse() -> argparse.ArgumentParser:
 
 
 def configuration(parser):
-
     args, remainder_argv = parser.parse_known_args()
 
     levels = {
