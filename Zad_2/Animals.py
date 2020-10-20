@@ -26,7 +26,7 @@ class Animal:
 
 
 class Sheep(Animal):
-    #TODO: nwm czy te __init__ tez mamy loggowac
+    # TODO: nwm czy te __init__ tez mamy loggowac
     def __init__(self, init_pos_limit, move_dist):
         super().__init__(move_dist)
         self.init_pos_limit: float = init_pos_limit
@@ -96,6 +96,8 @@ class Wolf(Animal):
         If it's further the wolf moves in a straight line to the closest sheep.
         :return: Did sheep die
         """
+        logging.debug("Calling a function - move - that changes wolf's position. "
+                      "The function takes no parameters. ")
         distance_to_sheep = -1
         sheep_index = -1
 
@@ -111,6 +113,7 @@ class Wolf(Animal):
 
         if distance_to_sheep < self.move_dist:
             self.game_sheep[sheep_index].die()
+            logging.debug("The function returns eaten sheep index: ", sheep_index)
             return sheep_index
 
         x_pos_sheep = self.game_sheep[sheep_index].get_x_pos()
@@ -124,4 +127,5 @@ class Wolf(Animal):
         # change x and y position of the wolf
         self.set_x_pos(self.get_x_pos() + self.move_dist * dir_x)
         self.set_y_pos(self.get_y_pos() + self.move_dist * dir_y)
+        logging.debug("The function returns: False, because wolf have not eaten any sheep. ")
         return False
