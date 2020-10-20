@@ -1,3 +1,4 @@
+import logging
 import math
 import random
 from scipy.spatial import distance
@@ -25,6 +26,7 @@ class Animal:
 
 
 class Sheep(Animal):
+    #TODO: nwm czy te __init__ tez mamy loggowac
     def __init__(self, init_pos_limit, move_dist):
         super().__init__(move_dist)
         self.init_pos_limit: float = init_pos_limit
@@ -32,13 +34,24 @@ class Sheep(Animal):
         self.is_alive = True
 
     def init_position(self):
+        logging.debug("Calling a function - init_position - that initializes sheep's position - x and y. "
+                      "The function takes no parameters. "
+                      "The function does not return anything. ")
         self.position[0]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
         self.position[1]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
 
     def move(self):
+        logging.debug("Calling a function - move - that changes sheep's position. "
+                      "The function takes no parameters. "
+                      "The function does not return anything. ")
+
         def select_move() -> str:
             moves: [str] = ["east", "west", "north", "south"]
-            return random.choice(moves)
+            choosen_move: str = random.choice(moves)
+            logging.debug("Calling a function - select_move - that draws the direction of sheep's movement. "
+                          "The function takes no parameters. "
+                          "The function returns direction: ", choosen_move)
+            return choosen_move
 
         if self.is_alive:
             selected_move: str = select_move()
@@ -56,6 +69,9 @@ class Sheep(Animal):
                 return
 
     def die(self):
+        logging.debug("Calling a function - die - that makes a sheep die. "
+                      "The function takes no parameters. "
+                      "The function does not return anything. ")
         self.is_alive = False
 
 
@@ -67,9 +83,11 @@ class Wolf(Animal):
             self.game_sheep: [Sheep] = game_sheep
 
     def calculate_distance(self, one_game_sheep: Sheep):
-        return distance.euclidean([self.position], [one_game_sheep.position])
-        # return math.sqrt((int(one_game_sheep.position[0] - self.position[0])) ^ 2 + (int(
-        #     one_game_sheep.position[1] - self.position[1])) ^ 2)
+        distance_to_sheep = distance.euclidean([self.position], [one_game_sheep.position])
+        logging.debug("Calling a function - calculate_distance - that calculates wolf's distance to sheep. "
+                      "The function takes one parameter: one_game_sheep - sheep position: ", one_game_sheep,
+                      "The function returns wolf's distance to sheep: ", distance_to_sheep)
+        return distance_to_sheep
 
     def move(self):
         """
