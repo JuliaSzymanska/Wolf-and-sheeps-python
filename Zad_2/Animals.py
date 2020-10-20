@@ -40,6 +40,7 @@ class Sheep(Animal):
                       "The function does not return anything. ")
         self.position[0]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
         self.position[1]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
+        logging.info("Initialized sheep position: [", self.position[0], ", ", self.position[1], "]")
 
     def move(self):
         logging.debug("Calling a function - move - that changes sheep's position. "
@@ -58,21 +59,30 @@ class Sheep(Animal):
             selected_move: str = select_move()
             if selected_move == "east":
                 self.position[0] += self.move_dist
+                logging.info("Sheep moved to ", selected_move, ". New sheep position: : [", self.position[0], ", ",
+                             self.position[1], "]")
                 return
             elif selected_move == "west":
                 self.position[0] -= self.move_dist
+                logging.info("Sheep moved to ", selected_move, ". New sheep position: : [", self.position[0], ", ",
+                             self.position[1], "]")
                 return
             elif selected_move == "north":
                 self.position[1] += self.move_dist
+                logging.info("Sheep moved to ", selected_move, ". New sheep position: : [", self.position[0], ", ",
+                             self.position[1], "]")
                 return
             elif selected_move == "south":
                 self.position[1] -= self.move_dist
+                logging.info("Sheep moved to ", selected_move, ". New sheep position: : [", self.position[0], ", ",
+                             self.position[1], "]")
                 return
 
     def die(self):
         logging.debug("Calling a function - die - that makes a sheep die. "
                       "The function takes no parameters. "
                       "The function does not return anything. ")
+        logging.info("The sheep has died. ")
         self.is_alive = False
 
 
