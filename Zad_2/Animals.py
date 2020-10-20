@@ -9,6 +9,7 @@ class Animal:
         self.move_dist: float = move_dist
         self.position: [float] = [0.0, 0.0]
 
+    # todo: nwm czy w tym szkielecie tez
     def move(self):
         pass
 
