@@ -33,24 +33,18 @@ class Sheep(Animal):
 
     @LoggingUtil.monitor_results
     def init_position(self):
-        logging.debug("Calling a function - init_position - that initializes sheep's position - x and y. "
-                      "The function takes no parameters. ")
         self.position[0]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
         self.position[1]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
         logging.info("Initialized sheep position: [", self.position[0], ", ", self.position[1], "]")
 
     @LoggingUtil.monitor_results
     def move(self):
-        logging.debug("Calling a function - move - that changes sheep's position. "
-                      "The function takes no parameters. ")
 
         # todo shouldn't log inner fun?
         @LoggingUtil.monitor_results
         def select_move() -> str:
             moves: [str] = ["east", "west", "north", "south"]
             choosen_move: str = random.choice(moves)
-            logging.debug("Calling a function - select_move - that draws the direction of sheep's movement. "
-                          "The function takes no parameters. ")
             return choosen_move
 
         if self.is_alive:
@@ -78,8 +72,6 @@ class Sheep(Animal):
 
     @LoggingUtil.monitor_results
     def die(self):
-        logging.debug("Calling a function - die - that makes a sheep die. "
-                      "The function takes no parameters. ")
         logging.info("The sheep has died. ")
         self.is_alive = False
 
@@ -94,8 +86,6 @@ class Wolf(Animal):
     @LoggingUtil.monitor_results
     def calculate_distance(self, one_game_sheep: Sheep):
         distance_to_sheep = distance.euclidean([self.position], [one_game_sheep.position])
-        logging.debug("Calling a function - calculate_distance - that calculates wolf's distance to sheep. "
-                      "The function takes one parameter: one_game_sheep - sheep position: ", one_game_sheep)
         return distance_to_sheep
 
     @LoggingUtil.monitor_results
@@ -112,8 +102,6 @@ class Wolf(Animal):
         #   https://stackoverflow.com/a/10974508
         #   https://stackoverflow.com/a/54209647
         #   https://docs.python.org/3/howto/logging.html
-        logging.debug("Calling a function - move - that changes wolf's position. "
-                      "The function takes no parameters. ")
         distance_to_sheep = -1
         sheep_index = -1
 

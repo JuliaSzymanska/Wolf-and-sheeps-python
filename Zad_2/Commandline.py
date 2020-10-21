@@ -9,8 +9,6 @@ import LoggingUtil
 
 @LoggingUtil.monitor_results
 def init_argparse() -> argparse.ArgumentParser:
-    logging.debug("Calling a function - init_argparse - that inits parser. "
-                  "The function takes no parameters. ")
     parser = argparse.ArgumentParser(add_help=True)
     parser.add_argument(
         '-c',
@@ -77,8 +75,6 @@ def init_argparse() -> argparse.ArgumentParser:
 @LoggingUtil.monitor_results
 def configuration(parser):
     loggersonPL = LoggingUtil.get_logger()
-    logging.debug("Calling a function - configuration - that configure parser. "
-                  "The function takes one parameter: parser. ")
     args, remainder_argv = parser.parse_known_args()
 
     levels = {
@@ -132,9 +128,10 @@ def configuration(parser):
             #   Chyba że tego nie ma w poleceniu tzn jest w poleceniu dokładnie jak ma byc, to wtedy nie
 
             loggersonPL.setLevel(levels[args.log])
-            logging.basicConfig(filename=Config.SAVE_DIR + 'chase.log',
-                                filemode='w',
-                                level=levels[args.log])
+            # todo tu się coś jebie
+            # logging.basicConfig(filename=Config.SAVE_DIR + 'chase.log',
+            #                     filemode='w',
+            #                     level=levels[args.log])
 
     if args.rounds:
         if args.rounds > 0:

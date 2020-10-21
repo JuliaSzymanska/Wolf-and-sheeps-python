@@ -25,17 +25,11 @@ class Simulation:
 
     @LoggingUtil.monitor_results
     def initialize_sheep(self, number_of_sheep: int, init_pos_limit: float, sheep_move_dist: float):
-        logging.debug("Calling a function - initialize_sheep - that initializes sheep's. "
-                      "The function takes three parameters, number of sheep: ", number_of_sheep,
-                      "initialization position limit: ", init_pos_limit,
-                      "sheep move distance: ", sheep_move_dist,)
         for i in range(number_of_sheep):
             self.sheep.append(Animals.Sheep(init_pos_limit, sheep_move_dist))
 
     @LoggingUtil.monitor_results
     def perform_simulation(self):
-        logging.debug("Calling a function - perform_simulation - that performs simulation. "
-                      "The function takes no parameters. ")
         living_sheep_count = self.number_of_sheep
         self.display_and_store_simulation_information(living_sheep_count)
 
@@ -59,18 +53,12 @@ class Simulation:
 
     @LoggingUtil.monitor_results
     def display_and_store_simulation_information(self, living_sheep_count):
-        logging.debug(
-            "Calling a function - display_and_store_simulation_information - "
-            "that calls functions to display information. "
-            "The function takes one parameter, actual number of living sheep: ", living_sheep_count,)
         self.show_information()
         self.append_to_json_list()
         self.append_to_csv_list(living_sheep_count)
 
     @LoggingUtil.monitor_results
     def show_information(self, ):
-        logging.debug("Calling a function - show_information - that shows information about simulation. "
-                      "The function takes no parameters. ")
         print("Round number: ", self.round_num)
         print("Wolf position: (", round(self.wolf.position[0], 3), ", ", round(self.wolf.position[1], 3), ")")
         number_of_alive: int = 0
@@ -82,8 +70,6 @@ class Simulation:
 
     @LoggingUtil.monitor_results
     def append_to_json_list(self):
-        logging.debug("Calling a function - append_to_json_list - that adds information to list to write to json. "
-                      "The function takes no parameters. ")
         sheep_position: [[int, int]] = []
         for s in self.sheep:
             if s.is_alive:
@@ -98,22 +84,16 @@ class Simulation:
 
     @LoggingUtil.monitor_results
     def save_to_json_file(self):
-        logging.debug("Calling a function - save_to_json_file - that saves information to json file. "
-                      "The function takes no parameters. ")
         json_object = json.dumps(self.list_to_write_json_file, indent=3)
         with open(Config.SAVE_DIR + 'pos.json', 'w') as json_file:
             json_file.write(json_object)
 
     @LoggingUtil.monitor_results
     def append_to_csv_list(self, number_of_alive_sheep: int):
-        logging.debug("Calling a function - append_to_csv_list - that adds information to list to write to csv. "
-                      "The function takes no parameters. ")
         self.list_to_write_csv_file.append([self.round_num, number_of_alive_sheep])
 
     @LoggingUtil.monitor_results
     def save_to_csv_file(self):
-        logging.debug("Calling a function - save_to_csv_file - that saves information to csv file. "
-                      "The function takes no parameters. ")
         with open(Config.SAVE_DIR + 'alive.csv', mode='w', newline='') as alive_file:
             csv_writer = csv.writer(alive_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONE)
 
