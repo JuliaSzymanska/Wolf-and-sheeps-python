@@ -124,8 +124,6 @@ class Simulation:
 if __name__ == '__main__':
     parser = Commandline.init_argparse()
     parser.parse_args()
-    logging.warning('Test on warning')
     simulation = Simulation(Config.ROUNDS, Config.SHEEP, Config.INIT_POS_LIMIT, Config.SHEEP_MOVE_DIST,
                             Config.WOLF_MOVE_DIST)
     simulation.perform_simulation()
-    logging.info('Test on info')

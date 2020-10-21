@@ -76,6 +76,7 @@ def init_argparse() -> argparse.ArgumentParser:
 
 @LoggingUtil.monitor_results
 def configuration(parser):
+    loggersonPL = LoggingUtil.get_logger()
     logging.debug("Calling a function - configuration - that configure parser. "
                   "The function takes one parameter: parser. ")
     args, remainder_argv = parser.parse_known_args()
@@ -129,6 +130,8 @@ def configuration(parser):
         else:
             # todo chce zrobić żeby loggowanie pokazwyało też godzinę i datę logu, https://docs.python.org/3/howto/logging.html
             #   Chyba że tego nie ma w poleceniu tzn jest w poleceniu dokładnie jak ma byc, to wtedy nie
+
+            loggersonPL.setLevel(levels[args.log])
             logging.basicConfig(filename=Config.SAVE_DIR + 'chase.log',
                                 filemode='w',
                                 level=levels[args.log])
