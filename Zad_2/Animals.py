@@ -112,15 +112,15 @@ class Wolf(Animal):
         distance_to_sheep = -1
         sheep_index = -1
 
-        for s in range(len(self.game_sheep)):
-            if self.game_sheep[s].is_alive:
+        for index, s in enumerate(self.game_sheep):
+            if s.is_alive:
+                current_dist = self.calculate_distance(s)
                 if sheep_index == -1:
-                    sheep_index = s
-                    distance_to_sheep = self.calculate_distance(self.game_sheep[s])
-                current_dist = self.calculate_distance(self.game_sheep[s])
+                    sheep_index = index
+                    distance_to_sheep = current_dist
                 if current_dist < distance_to_sheep:
                     distance_to_sheep = current_dist
-                    sheep_index = s
+                    sheep_index = index
 
         if distance_to_sheep < self.move_dist:
             self.game_sheep[sheep_index].die()

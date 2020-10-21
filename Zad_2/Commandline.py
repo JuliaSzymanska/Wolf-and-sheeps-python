@@ -125,6 +125,8 @@ def configuration(parser):
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')
         else:
+            # todo chce zrobić żeby loggowanie pokazwyało też godzinę i datę logu, https://docs.python.org/3/howto/logging.html
+            #   Chyba że tego nie ma w poleceniu tzn jest w poleceniu dokładnie jak ma byc, to wtedy nie
             logging.basicConfig(filename=Config.SAVE_DIR + 'chase.log',
                                 filemode='w',
                                 level=levels[args.log])
