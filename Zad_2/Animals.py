@@ -111,6 +111,7 @@ class Wolf(Animal):
         #   dodać funkcję która loguje 'za nas'
         #   najlepiej dodać moduł do logowanie
         #   https://stackoverflow.com/a/10974508
+        #   https://stackoverflow.com/a/54209647
         #   https://docs.python.org/3/howto/logging.html
         logging.debug("Calling a function - move - that changes wolf's position. "
                       "The function takes no parameters. ")
