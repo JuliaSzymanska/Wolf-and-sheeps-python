@@ -77,6 +77,7 @@ def init_argparse() -> argparse.ArgumentParser:
 # todo, poprawić żeby to też logowało? nwm wsm czy to tez
 @LoggingUtil.monitor_results
 def configuration(parser):
+    # todo rename (logger shadows a name form outer scope, we dont want that)
     loggersonPL = LoggingUtil.get_logger()
     args, remainder_argv = parser.parse_known_args()
 
