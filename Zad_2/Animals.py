@@ -107,6 +107,11 @@ class Wolf(Animal):
         If it's further the wolf moves in a straight line to the closest sheep.
         :return: Did sheep die
         """
+        # todo pobierać nazwę funkcji w kodzie
+        #   dodać funkcję która loguje 'za nas'
+        #   najlepiej dodać moduł do logowanie
+        #   https://stackoverflow.com/a/10974508
+        #   https://docs.python.org/3/howto/logging.html
         logging.debug("Calling a function - move - that changes wolf's position. "
                       "The function takes no parameters. ")
         distance_to_sheep = -1
