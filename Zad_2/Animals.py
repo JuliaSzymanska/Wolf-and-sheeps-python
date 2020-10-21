@@ -1,6 +1,7 @@
 import logging
 import math
 import random
+import LoggingUtil
 from scipy.spatial import distance
 
 
@@ -8,10 +9,6 @@ class Animal:
     def __init__(self, move_dist):
         self.move_dist: float = move_dist
         self.position: [float] = [0.0, 0.0]
-
-    # todo: nwm czy w tym szkielecie tez
-    def move(self):
-        pass
 
     def get_x_pos(self):
         return self.position[0]
@@ -34,25 +31,26 @@ class Sheep(Animal):
         self.init_position()
         self.is_alive = True
 
+    @LoggingUtil.monitor_results
     def init_position(self):
         logging.debug("Calling a function - init_position - that initializes sheep's position - x and y. "
-                      "The function takes no parameters. "
-                      "The function does not return anything. ")
+                      "The function takes no parameters. ")
         self.position[0]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
         self.position[1]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
         logging.info("Initialized sheep position: [", self.position[0], ", ", self.position[1], "]")
 
+    @LoggingUtil.monitor_results
     def move(self):
         logging.debug("Calling a function - move - that changes sheep's position. "
-                      "The function takes no parameters. "
-                      "The function does not return anything. ")
+                      "The function takes no parameters. ")
 
+        # todo shouldn't log inner fun?
+        @LoggingUtil.monitor_results
         def select_move() -> str:
             moves: [str] = ["east", "west", "north", "south"]
             choosen_move: str = random.choice(moves)
             logging.debug("Calling a function - select_move - that draws the direction of sheep's movement. "
-                          "The function takes no parameters. "
-                          "The function returns direction: ", choosen_move)
+                          "The function takes no parameters. ")
             return choosen_move
 
         if self.is_alive:
@@ -78,10 +76,10 @@ class Sheep(Animal):
                              self.position[1], "]")
                 return
 
+    @LoggingUtil.monitor_results
     def die(self):
         logging.debug("Calling a function - die - that makes a sheep die. "
-                      "The function takes no parameters. "
-                      "The function does not return anything. ")
+                      "The function takes no parameters. ")
         logging.info("The sheep has died. ")
         self.is_alive = False
 
@@ -93,13 +91,14 @@ class Wolf(Animal):
         if type(game_sheep[0]) is Sheep:
             self.game_sheep: [Sheep] = game_sheep
 
+    @LoggingUtil.monitor_results
     def calculate_distance(self, one_game_sheep: Sheep):
         distance_to_sheep = distance.euclidean([self.position], [one_game_sheep.position])
         logging.debug("Calling a function - calculate_distance - that calculates wolf's distance to sheep. "
-                      "The function takes one parameter: one_game_sheep - sheep position: ", one_game_sheep,
-                      "The function returns wolf's distance to sheep: ", distance_to_sheep)
+                      "The function takes one parameter: one_game_sheep - sheep position: ", one_game_sheep)
         return distance_to_sheep
 
+    @LoggingUtil.monitor_results
     def move(self):
         """
         Finds closest sheep to the wolf.
@@ -130,7 +129,6 @@ class Wolf(Animal):
 
         if distance_to_sheep < self.move_dist:
             self.game_sheep[sheep_index].die()
-            logging.debug("The function returns eaten sheep index: ", sheep_index)
             return sheep_index
 
         x_pos_sheep = self.game_sheep[sheep_index].get_x_pos()
@@ -144,5 +142,4 @@ class Wolf(Animal):
         # change x and y position of the wolf
         self.set_x_pos(self.get_x_pos() + self.move_dist * dir_x)
         self.set_y_pos(self.get_y_pos() + self.move_dist * dir_y)
-        logging.debug("The function returns: False, because wolf have not eaten any sheep. ")
         return False

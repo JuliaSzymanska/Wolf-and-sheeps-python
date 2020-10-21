@@ -2,12 +2,15 @@ import argparse
 import logging
 import os
 import Config
+import configparser
+
+import LoggingUtil
 
 
+@LoggingUtil.monitor_results
 def init_argparse() -> argparse.ArgumentParser:
     logging.debug("Calling a function - init_argparse - that inits parser. "
-                  "The function takes no parameters. "
-                  "The function returns parser. ")
+                  "The function takes no parameters. ")
     parser = argparse.ArgumentParser(add_help=True)
     parser.add_argument(
         '-c',
@@ -71,10 +74,10 @@ def init_argparse() -> argparse.ArgumentParser:
     return parser
 
 
+@LoggingUtil.monitor_results
 def configuration(parser):
     logging.debug("Calling a function - configuration - that configure parser. "
-                  "The function takes one parameter: parser. "
-                  "The function does not return anything. ")
+                  "The function takes one parameter: parser. ")
     args, remainder_argv = parser.parse_known_args()
 
     levels = {
@@ -88,7 +91,6 @@ def configuration(parser):
     if args.config:
         config_file = args.config + ".ini"
         if os.path.exists(config_file) and os.path.isfile(config_file):
-            import configparser
             config = configparser.ConfigParser()
             config.read(config_file)
             if float(config['Terrain']['InitPosLimit']) > 0:
