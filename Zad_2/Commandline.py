@@ -7,6 +7,8 @@ import configparser
 import LoggingUtil
 
 
+# todo, poprawić żeby to też logowało? nwm wsm czy to tez
+
 @LoggingUtil.monitor_results
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(add_help=True)
@@ -72,6 +74,7 @@ def init_argparse() -> argparse.ArgumentParser:
     return parser
 
 
+# todo, poprawić żeby to też logowało? nwm wsm czy to tez
 @LoggingUtil.monitor_results
 def configuration(parser):
     loggersonPL = LoggingUtil.get_logger()
@@ -124,10 +127,14 @@ def configuration(parser):
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')
         else:
-            # todo chce zrobić żeby loggowanie pokazwyało też godzinę i datę logu, https://docs.python.org/3/howto/logging.html
-            #   Chyba że tego nie ma w poleceniu tzn jest w poleceniu dokładnie jak ma byc, to wtedy nie
 
             loggersonPL.setLevel(levels[args.log])
+            # todo jestem prawie pewien że jak tutaj się poda folder to nie zadziała : o
+            handler = logging.FileHandler(filename=Config.SAVE_DIR + 'chase.log', mode='w')
+            handler.setLevel(levels[args.log])
+            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            handler.setFormatter(formatter)
+            loggersonPL.addHandler(handler)
             # todo tu się coś jebie
             # logging.basicConfig(filename=Config.SAVE_DIR + 'chase.log',
             #                     filemode='w',
