@@ -19,3 +19,7 @@ def debug_logging(func):
 
 def info_logging(message: str):
     logging.getLogger(__name__).info(message)
+
+
+def warning_logging():
+    i = 0

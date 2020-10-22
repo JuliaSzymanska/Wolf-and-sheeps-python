@@ -1,6 +1,5 @@
 import csv
 import json
-import logging
 import msvcrt
 from typing import Union
 
