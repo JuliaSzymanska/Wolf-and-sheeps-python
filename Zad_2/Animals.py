@@ -51,28 +51,32 @@ class Sheep(Animal):
             selected_move: str = select_move()
             if selected_move == "east":
                 self.position[0] += self.move_dist
-                logging.info("Sheep moved to ", selected_move, ". New sheep position: : [", self.position[0], ", ",
-                             self.position[1], "]")
+                LoggingUtil.info_logging(
+                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self.position[0],
+                                                                               self.position[1]))
                 return
             elif selected_move == "west":
                 self.position[0] -= self.move_dist
-                logging.info("Sheep moved to ", selected_move, ". New sheep position: : [", self.position[0], ", ",
-                             self.position[1], "]")
+                LoggingUtil.info_logging(
+                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self.position[0],
+                                                                               self.position[1]))
                 return
             elif selected_move == "north":
                 self.position[1] += self.move_dist
-                logging.info("Sheep moved to ", selected_move, ". New sheep position: : [", self.position[0], ", ",
-                             self.position[1], "]")
+                LoggingUtil.info_logging(
+                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self.position[0],
+                                                                               self.position[1]))
                 return
             elif selected_move == "south":
                 self.position[1] -= self.move_dist
-                logging.info("Sheep moved to ", selected_move, ". New sheep position: : [", self.position[0], ", ",
-                             self.position[1], "]")
+                LoggingUtil.info_logging(
+                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self.position[0],
+                                                                               self.position[1]))
                 return
 
     @LoggingUtil.debug_logging
     def die(self):
-        logging.info("The sheep has died. ")
+        LoggingUtil.info_logging("The sheep has died. ")
         self.is_alive = False
 
 
@@ -117,6 +121,7 @@ class Wolf(Animal):
 
         if distance_to_sheep < self.move_dist:
             self.game_sheep[sheep_index].die()
+            LoggingUtil.info_logging("Sheep eaten index: {}".format(sheep_index))
             return sheep_index
 
         x_pos_sheep = self.game_sheep[sheep_index].get_x_pos()
@@ -130,4 +135,5 @@ class Wolf(Animal):
         # change x and y position of the wolf
         self.set_x_pos(self.get_x_pos() + self.move_dist * dir_x)
         self.set_y_pos(self.get_y_pos() + self.move_dist * dir_y)
+        LoggingUtil.info_logging("No sheep was eaten")
         return False
