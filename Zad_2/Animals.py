@@ -31,17 +31,17 @@ class Sheep(Animal):
         self.init_position()
         self.is_alive = True
 
-    @LoggingUtil.monitor_results
+    @LoggingUtil.debug_logging
     def init_position(self):
         self.position[0]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
         self.position[1]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
-        logging.info("Initialized sheep position: [", self.position[0], ", ", self.position[1], "]")
+        LoggingUtil.info_logging("Initialized sheep position: [ {} , {}]".format(self.position[0], self.position[1]))
 
-    @LoggingUtil.monitor_results
+    @LoggingUtil.debug_logging
     def move(self):
 
         # todo shouldn't log inner fun?
-        @LoggingUtil.monitor_results
+        @LoggingUtil.debug_logging
         def select_move() -> str:
             moves: [str] = ["east", "west", "north", "south"]
             choosen_move: str = random.choice(moves)
@@ -70,7 +70,7 @@ class Sheep(Animal):
                              self.position[1], "]")
                 return
 
-    @LoggingUtil.monitor_results
+    @LoggingUtil.debug_logging
     def die(self):
         logging.info("The sheep has died. ")
         self.is_alive = False
@@ -83,12 +83,12 @@ class Wolf(Animal):
         if type(game_sheep[0]) is Sheep:
             self.game_sheep: [Sheep] = game_sheep
 
-    @LoggingUtil.monitor_results
+    @LoggingUtil.debug_logging
     def calculate_distance(self, one_game_sheep: Sheep):
         distance_to_sheep = distance.euclidean([self.position], [one_game_sheep.position])
         return distance_to_sheep
 
-    @LoggingUtil.monitor_results
+    @LoggingUtil.debug_logging
     def move(self):
         """
         Finds closest sheep to the wolf.

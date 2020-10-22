@@ -9,7 +9,7 @@ import LoggingUtil
 
 # todo, poprawić żeby to też logowało? nwm wsm czy to tez
 
-@LoggingUtil.monitor_results
+@LoggingUtil.debug_logging
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(add_help=True)
     parser.add_argument(
@@ -75,7 +75,7 @@ def init_argparse() -> argparse.ArgumentParser:
 
 
 # todo, poprawić żeby to też logowało? nwm wsm czy to tez
-@LoggingUtil.monitor_results
+@LoggingUtil.debug_logging
 def configuration(parser):
     # todo rename (logger shadows a name form outer scope, we dont want that)
     loggersonPL = LoggingUtil.get_logger()
