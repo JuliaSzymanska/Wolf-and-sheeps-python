@@ -138,12 +138,6 @@ punkty.txt
 #Karol
 #vs code
 .vscode/
-alive.csv
-chase.log
-pos.json
-*/logs/*
-
-
 
 #png i gif
 *.gif
