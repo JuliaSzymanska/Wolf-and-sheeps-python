@@ -43,7 +43,7 @@ def log_warning_exception(exception, msg: str):
                 error_msg = ' error has occurred at ' + func.__name__ + '()'
                 # todo sprawdzic czy logowanie exceptiona dziala
                 logger.warning(msg + error_msg + ' exception message: ' + str(e))
-                return e
+                raise e
 
         return wrapper
 
