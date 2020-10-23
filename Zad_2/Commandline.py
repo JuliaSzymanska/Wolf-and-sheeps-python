@@ -1,9 +1,9 @@
 import argparse
+import configparser
 import logging
 import os
-import Config
-import configparser
 
+import Config
 import LoggingUtil
 
 
@@ -88,26 +88,6 @@ def configuration(parser):
         'DEBUG': logging.DEBUG
     }
 
-    if args.config:
-        config_file = args.config + ".ini"
-        if os.path.exists(config_file) and os.path.isfile(config_file):
-            config = configparser.ConfigParser()
-            config.read(config_file)
-            if float(config['Terrain']['InitPosLimit']) > 0:
-                Config.INIT_POS_LIMIT = float(config['Terrain']['InitPosLimit'])
-            else:
-                raise ValueError('InitPosLimit should be greater than 0.')
-            if float(config['Movement']['SheepMoveDist']) > 0:
-                Config.SHEEP_MOVE_DIST = float(config['Movement']['SheepMoveDist'])
-            else:
-                raise ValueError('SheepMoveDist should be greater than 0.')
-            if float(config['Movement']['WolfMoveDist']) > 0:
-                Config.WOLF_MOVE_DIST = float(config['Movement']['WolfMoveDist'])
-            else:
-                raise ValueError('WolfMoveDist should be greater than 0.')
-        else:
-            raise FileNotFoundError('File does not exist')
-
     # todo: dla julki, sprawdz czy to dziala tak jak powinno
     if args.dir:
         Config.SAVE_DIR = args.dir
@@ -133,10 +113,28 @@ def configuration(parser):
             raise ValueError('This log level does not exist.')
         else:
             LoggingUtil.init_logger(levels[args.log])
-            # todo tu się coś jebie
-            # logging.basicConfig(filename=Config.SAVE_DIR + 'chase.log',
-            #                     filemode='w',
-            #                     level=levels[args.log])
+
+    if args.config:
+        config_file = args.config
+        if not args.config.endswith('.ini'):
+            config_file += '.ini'
+        if os.path.exists(config_file) and os.path.isfile(config_file):
+            config = configparser.ConfigParser()
+            config.read(config_file)
+            if float(config['Terrain']['InitPosLimit']) > 0:
+                Config.INIT_POS_LIMIT = float(config['Terrain']['InitPosLimit'])
+            else:
+                raise ValueError('InitPosLimit should be greater than 0.')
+            if float(config['Movement']['SheepMoveDist']) > 0:
+                Config.SHEEP_MOVE_DIST = float(config['Movement']['SheepMoveDist'])
+            else:
+                raise ValueError('SheepMoveDist should be greater than 0.')
+            if float(config['Movement']['WolfMoveDist']) > 0:
+                Config.WOLF_MOVE_DIST = float(config['Movement']['WolfMoveDist'])
+            else:
+                raise ValueError('WolfMoveDist should be greater than 0.')
+        else:
+            raise FileNotFoundError('File does not exist')
 
     if args.rounds:
         if args.rounds > 0:

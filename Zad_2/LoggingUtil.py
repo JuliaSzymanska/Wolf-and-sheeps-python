@@ -13,6 +13,7 @@ def init_logger(level: int):
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
+
 def debug_logging(func):
     @functools.wraps(func)
     def wrapper(*func_args, **func_kwargs):
