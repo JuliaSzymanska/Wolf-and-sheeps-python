@@ -74,6 +74,7 @@ def init_argparse() -> argparse.ArgumentParser:
     return parser
 
 
+
 # todo, Too się chyba nie loguje idk
 @LoggingUtil.debug_logging
 @LoggingUtil.log_warning_exception(OSError, '')
@@ -94,18 +95,16 @@ def configuration(parser):
         Config.SAVE_DIR += '' if Config.SAVE_DIR[-1] == '/' else '/'
         if not Config.SAVE_DIR.startswith('./'):
             Config.SAVE_DIR = './' + Config.SAVE_DIR
-        if os.path.exists(Config.SAVE_DIR):
-            if not os.path.isdir(args.dir):
+        if not os.path.exists(Config.SAVE_DIR):
+            if not os.path.isdir(Config.SAVE_DIR):
                 try:
-                    os.mkdir(args.dir)
-                    Config.SAVE_DIR = args.dir + '/'
+                    os.mkdir(Config.SAVE_DIR)
                 except OSError:
-                    raise OSError('Creation of the directory %s failed ' % Config.SAVE_DIR)
+                    # todo czy tak?
+                    Config.SAVE_DIR = Config.DEFAULT_SAVE_DIR
                 # todo: dlaczego raise? TO program się wywali jak się uda zrobić directory? Nie rozumiem
                 else:
                     raise OSError('Successfully created the directory %s ' % Config.SAVE_DIR)
-        else:
-            Config.SAVE_DIR = Config.DEFAULT_SAVE_DIR
 
     if args.log:
         if args.log not in levels.keys():
