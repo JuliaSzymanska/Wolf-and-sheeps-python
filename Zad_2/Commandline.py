@@ -78,7 +78,6 @@ def init_argparse() -> argparse.ArgumentParser:
 @LoggingUtil.monitor_results
 def configuration(parser):
     # todo rename (logger shadows a name form outer scope, we dont want that)
-    loggersonPL = LoggingUtil.get_logger()
     args, remainder_argv = parser.parse_known_args()
 
     levels = {
@@ -109,33 +108,37 @@ def configuration(parser):
         else:
             raise FileNotFoundError('File does not exist')
 
-    # tworzy się katalog, ale pliki zapisuja się w domyślnej ścieżce, a katalog tworzy sie na koniec programu.
-    # Natomiast jeśli katalog istnieje to działa poprawnie
+    # todo: dla julki, sprawdz czy to dziala tak jak powinno
     if args.dir:
-        if os.path.exists(args.dir) and os.path.isdir(args.dir):
-            Config.SAVE_DIR = args.dir + '/'
+        Config.SAVE_DIR = args.dir
+        Config.SAVE_DIR += '' if Config.SAVE_DIR[-1] == '/' else '/'
+        if not Config.SAVE_DIR.startswith('./'):
+            Config.SAVE_DIR = './' + Config.SAVE_DIR
+        if os.path.exists(Config.SAVE_DIR):
+            if not os.path.isdir(args.dir):
+                try:
+                    os.mkdir(args.dir)
+                    Config.SAVE_DIR = args.dir + '/'
+                except OSError:
+                    raise OSError('Creation of the directory %s failed ' % Config.SAVE_DIR)
+                else:
+                    raise OSError('Successfully created the directory %s ' % Config.SAVE_DIR)
         else:
-            try:
-                os.mkdir(args.dir)
-                Config.SAVE_DIR = args.dir + '/'
-            except OSError:
-                raise OSError('Creation of the directory %s failed ' % Config.SAVE_DIR)
-            else:
-                raise OSError('Successfully created the directory %s ' % Config.SAVE_DIR)
+            Config.SAVE_DIR = Config.DEFAULT_SAVE_DIR
 
     # todo: trzeba dorobić info i debug, w poleceniu są wytyczne, mamy loggowac info z programi
     if args.log:
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')
         else:
-
-            loggersonPL.setLevel(levels[args.log])
+            logging_util_logger = LoggingUtil.get_logger()
+            logging_util_logger.setLevel(levels[args.log])
             # todo jestem prawie pewien że jak tutaj się poda folder to nie zadziała : o
             handler = logging.FileHandler(filename=Config.SAVE_DIR + 'chase.log', mode='w')
             handler.setLevel(levels[args.log])
             formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
             handler.setFormatter(formatter)
-            loggersonPL.addHandler(handler)
+            logging_util_logger.addHandler(handler)
             # todo tu się coś jebie
             # logging.basicConfig(filename=Config.SAVE_DIR + 'chase.log',
             #                     filemode='w',

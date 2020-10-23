@@ -15,3 +15,7 @@ def monitor_results(func):
         return retval
 
     return wrapper
+
+
+def to_moje_info(msg: str):
+    logging.getLogger(__name__).info(msg)
