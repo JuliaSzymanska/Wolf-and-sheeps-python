@@ -133,7 +133,6 @@ def configuration(parser):
         else:
             logging_util_logger = LoggingUtil.get_logger()
             logging_util_logger.setLevel(levels[args.log])
-            # todo jestem prawie pewien że jak tutaj się poda folder to nie zadziała : o
             handler = logging.FileHandler(filename=Config.SAVE_DIR + 'chase.log', mode='w')
             handler.setLevel(levels[args.log])
             formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
