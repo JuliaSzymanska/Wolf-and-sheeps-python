@@ -1,10 +1,17 @@
 import logging
 import functools
 
+import Config
 
-def get_logger():
-    return logging.getLogger(__name__)
 
+def init_logger(level: int):
+    logger = logging.getLogger(__name__)
+    logger.setLevel(level)
+    handler = logging.FileHandler(filename=Config.SAVE_DIR + 'chase.log', mode='w')
+    handler.setLevel(level)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
 
 def debug_logging(func):
     @functools.wraps(func)

@@ -132,13 +132,7 @@ def configuration(parser):
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')
         else:
-            logging_util_logger = LoggingUtil.get_logger()
-            logging_util_logger.setLevel(levels[args.log])
-            handler = logging.FileHandler(filename=Config.SAVE_DIR + 'chase.log', mode='w')
-            handler.setLevel(levels[args.log])
-            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-            handler.setFormatter(formatter)
-            logging_util_logger.addHandler(handler)
+            LoggingUtil.init_logger(levels[args.log])
             # todo tu się coś jebie
             # logging.basicConfig(filename=Config.SAVE_DIR + 'chase.log',
             #                     filemode='w',
