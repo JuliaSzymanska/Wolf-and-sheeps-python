@@ -39,8 +39,10 @@ def log_warning_exception(exception, msg: str):
                 return func(*args, **kwargs)
             except exception as e:
                 logger = logging.getLogger(__name__)
+                # todo moze jakas lepsza wiadomosc?
                 error_msg = ' error has occurred at /' + func.__name__
-                logger.warning(msg + error_msg)
+                # todo sprawdzic czy logowanie exceptiona dziala
+                logger.warning(msg + error_msg + e)
                 return e
 
         return wrapper
