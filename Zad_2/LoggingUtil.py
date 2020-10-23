@@ -6,7 +6,7 @@ def get_logger():
     return logging.getLogger(__name__)
 
 
-def monitor_results(func):
+def debug_logging(func):
     @functools.wraps(func)
     def wrapper(*func_args, **func_kwargs):
         retval = func(*func_args, **func_kwargs)
@@ -16,6 +16,9 @@ def monitor_results(func):
 
     return wrapper
 
+def info_logging(message: str):
+    logging.getLogger(__name__).info(message)
 
-def to_moje_info(msg: str):
-    logging.getLogger(__name__).info(msg)
+
+def warning_logging():
+    i = 0
