@@ -74,11 +74,10 @@ def init_argparse() -> argparse.ArgumentParser:
     return parser
 
 
-# todo, poprawić żeby to też logowało? nwm wsm czy to tez
+# todo, Too się chyba nie loguje idk
 @LoggingUtil.debug_logging
 @LoggingUtil.log_warning_exception(OSError, '')
 def configuration(parser):
-    # todo rename (logger shadows a name form outer scope, we dont want that)
     args, remainder_argv = parser.parse_known_args()
 
     levels = {
