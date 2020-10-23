@@ -1,7 +1,7 @@
 import csv
 import json
 import msvcrt
-from typing import Union
+from typing import Union, List
 
 import Animals
 import Config
@@ -50,6 +50,12 @@ class Simulation:
         if Config.WAIT and (self.round_num < self.rounds and self.living_sheep_count > 0):
             print("Press any key to continue...")
             msvcrt.getch()
+
+    def get_sheep(self) -> List[Animals.Sheep]:
+        return self.sheep
+
+    def get_wolf(self) -> Animals.Wolf:
+        return self.wolf
 
     @LoggingUtil.debug_logging
     def display_and_store_simulation_information(self, living_sheep_count):
