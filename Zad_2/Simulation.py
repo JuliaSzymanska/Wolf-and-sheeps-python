@@ -20,6 +20,7 @@ class Simulation:
         self.list_to_write_json_file = []
         self.list_to_write_csv_file = []
         self.round_num = 0
+        self.living_sheep_count = self.number_of_sheep
 
     @LoggingUtil.debug_logging
     def initialize_sheep(self, number_of_sheep: int, init_pos_limit: float, sheep_move_dist: float):
@@ -28,26 +29,27 @@ class Simulation:
 
     @LoggingUtil.debug_logging
     def perform_simulation(self):
-        living_sheep_count = self.number_of_sheep
-        self.display_and_store_simulation_information(living_sheep_count)
+        self.display_and_store_simulation_information(self.living_sheep_count)
 
-        while self.round_num < self.rounds and living_sheep_count > 0:
-
-            [x.move() for x in self.sheep]
-
-            self.dead_sheep_index = self.wolf.move()
-
-            if self.dead_sheep_index:
-                living_sheep_count -= 1
-
-            self.round_num += 1
-            self.display_and_store_simulation_information(living_sheep_count)
-            if Config.WAIT and (self.round_num < self.rounds and living_sheep_count > 0):
-                print("Press any key to continue...")
-                msvcrt.getch()
+        while self.round_num < self.rounds and self.living_sheep_count > 0:
+            self.simulation_round()
 
         self.save_to_json_file()
         self.save_to_csv_file()
+
+    def simulation_round(self):
+        [x.move() for x in self.sheep]
+
+        self.dead_sheep_index = self.wolf.move()
+
+        if self.dead_sheep_index:
+            self.living_sheep_count -= 1
+
+        self.round_num += 1
+        self.display_and_store_simulation_information(self.living_sheep_count)
+        if Config.WAIT and (self.round_num < self.rounds and self.living_sheep_count > 0):
+            print("Press any key to continue...")
+            msvcrt.getch()
 
     @LoggingUtil.debug_logging
     def display_and_store_simulation_information(self, living_sheep_count):
