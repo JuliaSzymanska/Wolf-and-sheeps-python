@@ -3,9 +3,7 @@ import json
 import msvcrt
 from typing import Union, List
 
-import Animals
-import Config
-import LoggingUtil
+from . import Animals, LoggingUtil, Config
 
 
 class Simulation:

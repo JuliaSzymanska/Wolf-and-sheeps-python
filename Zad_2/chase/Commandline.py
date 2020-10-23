@@ -3,8 +3,7 @@ import configparser
 import logging
 import os
 
-import Config
-import LoggingUtil
+from . import Config, LoggingUtil
 
 
 @LoggingUtil.debug_logging

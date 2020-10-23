@@ -1,7 +1,7 @@
 import functools
 import logging
 
-import Config
+from . import Config
 
 
 def init_logger(level: int):

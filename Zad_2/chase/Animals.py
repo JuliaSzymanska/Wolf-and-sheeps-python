@@ -1,6 +1,6 @@
 import math
 import random
-import LoggingUtil
+from . import LoggingUtil
 from scipy.spatial import distance
 
 

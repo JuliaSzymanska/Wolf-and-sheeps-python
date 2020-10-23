@@ -1,6 +1,5 @@
-import Commandline
-import Config
-from Simulation import Simulation
+from chase import Commandline, Config
+from chase.Simulation import Simulation
 
 if __name__ == '__main__':
     parser = Commandline.init_argparse()
