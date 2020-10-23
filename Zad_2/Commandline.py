@@ -121,6 +121,7 @@ def configuration(parser):
                     Config.SAVE_DIR = args.dir + '/'
                 except OSError:
                     raise OSError('Creation of the directory %s failed ' % Config.SAVE_DIR)
+                # todo: dlaczego raise? TO program się wywali jak się uda zrobić directory? Nie rozumiem
                 else:
                     raise OSError('Successfully created the directory %s ' % Config.SAVE_DIR)
         else:

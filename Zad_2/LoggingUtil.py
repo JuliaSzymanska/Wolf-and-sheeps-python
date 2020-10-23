@@ -16,6 +16,7 @@ def debug_logging(func):
 
     return wrapper
 
+
 def info_logging(message: str):
     logging.getLogger(__name__).info(message)
 
