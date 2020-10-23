@@ -29,7 +29,7 @@ def info_logging(message: str):
     logging.getLogger(__name__).info(message)
 
 
-def log_warning_exception(exception, msg: str):
+def log_error_exception(exception, msg: str):
     def error_log(func):
 
         @functools.wraps(func)
@@ -42,7 +42,7 @@ def log_warning_exception(exception, msg: str):
                 # todo moze jakas lepsza wiadomosc?
                 error_msg = ' error has occurred at ' + func.__name__ + '()'
                 # todo sprawdzic czy logowanie exceptiona dziala
-                logger.warning(msg + error_msg + ' exception message: ' + str(e))
+                logger.error(msg + error_msg + ' exception message: ' + str(e))
                 raise e
 
         return wrapper
