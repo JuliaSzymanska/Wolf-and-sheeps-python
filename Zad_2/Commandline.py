@@ -72,10 +72,11 @@ def init_argparse() -> argparse.ArgumentParser:
     return parser
 
 
-
 # todo, Too się chyba nie loguje idk
 @LoggingUtil.debug_logging
-@LoggingUtil.log_error_exception(OSError, '')
+@LoggingUtil.log_error_exception(OSError)
+@LoggingUtil.log_error_exception(ValueError)
+@LoggingUtil.log_error_exception(FileNotFoundError)
 def configuration(parser):
     args, remainder_argv = parser.parse_known_args()
 

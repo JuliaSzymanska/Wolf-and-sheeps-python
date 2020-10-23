@@ -29,7 +29,7 @@ def info_logging(message: str):
     logging.getLogger(__name__).info(message)
 
 
-def log_error_exception(exception, msg: str):
+def log_error_exception(exception):
     def error_log(func):
 
         @functools.wraps(func)
@@ -40,9 +40,9 @@ def log_error_exception(exception, msg: str):
             except exception as e:
                 logger = logging.getLogger(__name__)
                 # todo moze jakas lepsza wiadomosc?
-                error_msg = ' error has occurred at ' + func.__name__ + '()'
+                error_msg = 'Exception ' + e.__class__.__name__ + ' has occurred at ' + func.__name__ + '()'
                 # todo sprawdzic czy logowanie exceptiona dziala
-                logger.error(msg + error_msg + ' exception message: ' + str(e))
+                logger.error(error_msg + ' exception message: ' + str(e))
                 raise e
 
         return wrapper
