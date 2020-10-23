@@ -1,5 +1,6 @@
 import csv
 import json
+import msvcrt
 from typing import Union
 
 import Animals
