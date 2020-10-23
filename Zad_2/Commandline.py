@@ -7,8 +7,6 @@ import Config
 import LoggingUtil
 
 
-# todo, poprawić żeby to też logowało? nwm wsm czy to tez
-
 @LoggingUtil.debug_logging
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(add_help=True)
@@ -89,7 +87,6 @@ def configuration(parser):
         'DEBUG': logging.DEBUG
     }
 
-    # todo: dla julki, sprawdz czy to dziala tak jak powinno
     if args.dir:
         Config.SAVE_DIR = args.dir
         Config.SAVE_DIR += '' if Config.SAVE_DIR[-1] == '/' else '/'
@@ -100,11 +97,7 @@ def configuration(parser):
                 try:
                     os.mkdir(Config.SAVE_DIR)
                 except OSError:
-                    # todo czy tak?
                     Config.SAVE_DIR = Config.DEFAULT_SAVE_DIR
-                # todo: dlaczego raise? TO program się wywali jak się uda zrobić directory? Nie rozumiem
-                else:
-                    raise OSError('Successfully created the directory %s ' % Config.SAVE_DIR)
 
     if args.log:
         if args.log not in levels.keys():

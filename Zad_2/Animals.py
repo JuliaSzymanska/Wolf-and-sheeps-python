@@ -38,8 +38,6 @@ class Sheep(Animal):
 
     @LoggingUtil.debug_logging
     def move(self):
-
-        # todo shouldn't log inner fun?
         @LoggingUtil.debug_logging
         def select_move() -> str:
             moves: [str] = ["east", "west", "north", "south"]
@@ -99,12 +97,6 @@ class Wolf(Animal):
         If it's further the wolf moves in a straight line to the closest sheep.
         :return: Did sheep die
         """
-        # todo pobierać nazwę funkcji w kodzie
-        #   dodać funkcję która loguje 'za nas'
-        #   najlepiej dodać moduł do logowanie
-        #   https://stackoverflow.com/a/10974508
-        #   https://stackoverflow.com/a/54209647
-        #   https://docs.python.org/3/howto/logging.html
         distance_to_sheep = -1
         sheep_index = -1
 
