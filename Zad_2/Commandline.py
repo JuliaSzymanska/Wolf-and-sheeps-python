@@ -76,6 +76,7 @@ def init_argparse() -> argparse.ArgumentParser:
 
 # todo, poprawić żeby to też logowało? nwm wsm czy to tez
 @LoggingUtil.debug_logging
+@LoggingUtil.log_warning_exception(OSError, '')
 def configuration(parser):
     # todo rename (logger shadows a name form outer scope, we dont want that)
     args, remainder_argv = parser.parse_known_args()
@@ -107,7 +108,6 @@ def configuration(parser):
         else:
             Config.SAVE_DIR = Config.DEFAULT_SAVE_DIR
 
-    # todo: trzeba dorobić info i debug, w poleceniu są wytyczne, mamy loggowac info z programi
     if args.log:
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')

@@ -1,5 +1,5 @@
-import logging
 import functools
+import logging
 
 import Config
 
@@ -29,5 +29,20 @@ def info_logging(message: str):
     logging.getLogger(__name__).info(message)
 
 
-def warning_logging():
-    i = 0
+def log_warning_exception(exception, msg: str):
+    def error_log(func):
+
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+
+            try:
+                return func(*args, **kwargs)
+            except exception as e:
+                logger = logging.getLogger(__name__)
+                error_msg = ' error has occurred at /' + func.__name__
+                logger.warning(msg + error_msg)
+                return e
+
+        return wrapper
+
+    return error_log
