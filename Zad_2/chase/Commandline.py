@@ -103,7 +103,6 @@ def configuration(parser):
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')
         else:
-            print("XD")
             LoggingUtil.init_logger(levels[args.log])
 
     if args.config:
