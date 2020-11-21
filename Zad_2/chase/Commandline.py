@@ -71,7 +71,6 @@ def init_argparse() -> argparse.ArgumentParser:
     return parser
 
 
-# todo nie loguje sie jesli zly log level
 @LoggingUtil.debug_logging
 @LoggingUtil.log_error_exception(OSError)
 @LoggingUtil.log_error_exception(ValueError)

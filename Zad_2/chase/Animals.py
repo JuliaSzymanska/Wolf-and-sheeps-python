@@ -81,8 +81,7 @@ class Wolf(Animal):
     def __init__(self, move_dist, game_sheep):
         super().__init__(move_dist)
         # todo fix (check if type is list of type?)
-        if type(game_sheep[0]) is Sheep:
-            self.game_sheep: [Sheep] = game_sheep
+        self.game_sheep: [Sheep] = game_sheep
 
     @LoggingUtil.debug_logging
     def calculate_distance(self, one_game_sheep: Sheep):

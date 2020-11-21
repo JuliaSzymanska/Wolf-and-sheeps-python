@@ -18,10 +18,10 @@ def debug_logging(func):
     @functools.wraps(func)
     def wrapper(*func_args, **func_kwargs):
         retval = func(*func_args, **func_kwargs)
+        # TODO: kwargs
         logging.getLogger(__name__).debug('function %s () params %s returns %s', func.__name__, func_args.__str__(),
                                           repr(retval))
         return retval
-
     return wrapper
 
 
@@ -39,12 +39,9 @@ def log_error_exception(exception):
                 return func(*args, **kwargs)
             except exception as e:
                 logger = logging.getLogger(__name__)
-                # todo moze jakas lepsza wiadomosc?
                 error_msg = 'Exception ' + e.__class__.__name__ + ' has occurred at ' + func.__name__ + '()'
-                # todo sprawdzic czy logowanie exceptiona dziala
                 logger.error(error_msg + ' exception message: ' + str(e))
                 raise e
 
         return wrapper
-
     return error_log
