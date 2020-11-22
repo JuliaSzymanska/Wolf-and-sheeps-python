@@ -7,19 +7,19 @@ from scipy.spatial import distance
 class Animal:
     def __init__(self, move_dist):
         self.move_dist: float = move_dist
-        self.position: [float] = [0.0, 0.0]
+        self._position: [float] = [0.0, 0.0]
 
     def get_x_pos(self):
-        return self.position[0]
+        return self._position[0]
 
     def get_y_pos(self):
-        return self.position[1]
+        return self._position[1]
 
     def set_x_pos(self, x: float):
-        self.position[0] = x
+        self._position[0] = x
 
     def set_y_pos(self, y: float):
-        self.position[1] = y
+        self._position[1] = y
 
 
 class Sheep(Animal):
@@ -31,9 +31,9 @@ class Sheep(Animal):
 
     @LoggingUtil.debug_logging
     def init_position(self):
-        self.position[0]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
-        self.position[1]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
-        LoggingUtil.info_logging("Initialized sheep position: [ {} , {}]".format(self.position[0], self.position[1]))
+        self._position[0]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
+        self._position[1]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
+        LoggingUtil.info_logging("Initialized sheep position: [ {} , {}]".format(self._position[0], self._position[1]))
 
     @LoggingUtil.debug_logging
     def move(self):
@@ -46,28 +46,28 @@ class Sheep(Animal):
         if self.is_alive:
             selected_move: str = select_move()
             if selected_move == "east":
-                self.position[0] += self.move_dist
+                self._position[0] += self.move_dist
                 LoggingUtil.info_logging(
-                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self.position[0],
-                                                                               self.position[1]))
+                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self._position[0],
+                                                                               self._position[1]))
                 return
             elif selected_move == "west":
-                self.position[0] -= self.move_dist
+                self._position[0] -= self.move_dist
                 LoggingUtil.info_logging(
-                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self.position[0],
-                                                                               self.position[1]))
+                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self._position[0],
+                                                                               self._position[1]))
                 return
             elif selected_move == "north":
-                self.position[1] += self.move_dist
+                self._position[1] += self.move_dist
                 LoggingUtil.info_logging(
-                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self.position[0],
-                                                                               self.position[1]))
+                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self._position[0],
+                                                                               self._position[1]))
                 return
             elif selected_move == "south":
-                self.position[1] -= self.move_dist
+                self._position[1] -= self.move_dist
                 LoggingUtil.info_logging(
-                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self.position[0],
-                                                                               self.position[1]))
+                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self._position[0],
+                                                                               self._position[1]))
                 return
 
     @LoggingUtil.debug_logging
@@ -83,7 +83,7 @@ class Wolf(Animal):
 
     @LoggingUtil.debug_logging
     def calculate_distance(self, one_game_sheep: Sheep):
-        distance_to_sheep = distance.euclidean([self.position], [one_game_sheep.position])
+        distance_to_sheep = distance.euclidean([self._position], [one_game_sheep._position])
         return distance_to_sheep
 
     @LoggingUtil.debug_logging

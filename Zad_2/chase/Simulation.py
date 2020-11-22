@@ -64,7 +64,7 @@ class Simulation:
     @LoggingUtil.debug_logging
     def show_information(self, ):
         print("Round number: ", self.round_num)
-        print("Wolf position: (", round(self.wolf.position[0], 3), ", ", round(self.wolf.position[1], 3), ")")
+        print("Wolf position: (", round(self.wolf.get_x_pos(), 3), ", ", round(self.wolf.get_y_pos(), 3), ")")
         number_of_alive: int = 0
         for s in self.sheep:
             if s.is_alive:
@@ -77,12 +77,12 @@ class Simulation:
         sheep_position: [[int, int]] = []
         for s in self.sheep:
             if s.is_alive:
-                sheep_position.append([s.position[0], s.position[1]])
+                sheep_position.append([s._position[0], s._position[1]])
             else:
                 sheep_position.append(None)
         self.list_to_write_json_file.append({
             "round_no": self.round_num,
-            "wolf_pos": [self.wolf.position[0], self.wolf.position[1]],
+            "wolf_pos": [self.wolf.get_x_pos(), self.wolf.get_y_pos()],
             "sheep_pos": sheep_position,
         })
 
