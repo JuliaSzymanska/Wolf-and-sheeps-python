@@ -18,7 +18,6 @@ def debug_logging(func):
     @functools.wraps(func)
     def wrapper(*func_args, **func_kwargs):
         retval = func(*func_args, **func_kwargs)
-        # TODO: kwargs
         logging.getLogger(__name__).debug('function %s () params %s returns %s', func.__name__, func_args.__str__(),
                                           repr(retval))
         return retval

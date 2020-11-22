@@ -23,7 +23,6 @@ class Animal:
 
 
 class Sheep(Animal):
-    # TODO: nwm czy te __init__ tez mamy loggowac
     def __init__(self, init_pos_limit, move_dist):
         super().__init__(move_dist)
         self.init_pos_limit: float = init_pos_limit
@@ -80,7 +79,6 @@ class Sheep(Animal):
 class Wolf(Animal):
     def __init__(self, move_dist, game_sheep):
         super().__init__(move_dist)
-        # todo fix (check if type is list of type?)
         self.game_sheep: [Sheep] = game_sheep
 
     @LoggingUtil.debug_logging
