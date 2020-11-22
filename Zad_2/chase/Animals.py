@@ -64,7 +64,7 @@ class Sheep(Animal):
 
     @LoggingUtil.debug_logging
     def die(self):
-        LoggingUtil.info_logging("The sheep has died. ")
+        LoggingUtil.info_logging("The sheep died. ")
         self.is_alive = False
 
 
