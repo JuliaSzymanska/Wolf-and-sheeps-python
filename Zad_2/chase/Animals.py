@@ -31,9 +31,9 @@ class Sheep(Animal):
 
     @LoggingUtil.debug_logging
     def init_position(self):
-        self._position[0]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
-        self._position[1]: float = random.uniform(-self.init_pos_limit, self.init_pos_limit)
-        LoggingUtil.info_logging("Initialized sheep position: [ {} , {}]".format(self._position[0], self._position[1]))
+        self.set_x_pos(random.uniform(-self.init_pos_limit, self.init_pos_limit))
+        self.set_y_pos(random.uniform(-self.init_pos_limit, self.init_pos_limit))
+        LoggingUtil.info_logging("Initialized sheep position: [ {} , {}]".format(self.get_x_pos(), self.get_y_pos()))
 
     @LoggingUtil.debug_logging
     def move(self):
@@ -46,29 +46,21 @@ class Sheep(Animal):
         if self.is_alive:
             selected_move: str = select_move()
             if selected_move == "east":
-                self._position[0] += self.move_dist
-                LoggingUtil.info_logging(
-                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self._position[0],
-                                                                               self._position[1]))
-                return
+                self.set_x_pos(self.get_x_pos() + self.move_dist)
+
             elif selected_move == "west":
-                self._position[0] -= self.move_dist
-                LoggingUtil.info_logging(
-                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self._position[0],
-                                                                               self._position[1]))
-                return
+                self.set_x_pos(self.get_x_pos() - self.move_dist)
+
             elif selected_move == "north":
-                self._position[1] += self.move_dist
-                LoggingUtil.info_logging(
-                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self._position[0],
-                                                                               self._position[1]))
-                return
+                self.set_y_pos(self.get_y_pos() + self.move_dist)
+
             elif selected_move == "south":
-                self._position[1] -= self.move_dist
-                LoggingUtil.info_logging(
-                    "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self._position[0],
-                                                                               self._position[1]))
-                return
+                self.set_y_pos(self.get_y_pos() - self.move_dist)
+
+            LoggingUtil.info_logging(
+                "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self.get_x_pos(),
+                                                                           self.get_y_pos()))
+            return
 
     @LoggingUtil.debug_logging
     def die(self):

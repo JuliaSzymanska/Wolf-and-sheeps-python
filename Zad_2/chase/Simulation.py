@@ -77,7 +77,7 @@ class Simulation:
         sheep_position: [[int, int]] = []
         for s in self.sheep:
             if s.is_alive:
-                sheep_position.append([s._position[0], s._position[1]])
+                sheep_position.append([s.get_x_pos(), s.get_y_pos()])
             else:
                 sheep_position.append(None)
         self.list_to_write_json_file.append({
