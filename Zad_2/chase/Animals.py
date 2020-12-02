@@ -116,4 +116,4 @@ class Wolf(Animal):
         self.set_x_pos(self.get_x_pos() + self.move_dist * dir_x)
         self.set_y_pos(self.get_y_pos() + self.move_dist * dir_y)
         LoggingUtil.info_logging("No sheep was eaten")
-        return False
+        return None

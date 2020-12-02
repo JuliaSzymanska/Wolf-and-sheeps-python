@@ -40,7 +40,7 @@ class Simulation:
 
         self.dead_sheep_index = self.wolf.move()
 
-        if self.dead_sheep_index:
+        if self.dead_sheep_index is not None:
             self.living_sheep_count -= 1
 
         self.round_num += 1
@@ -65,11 +65,7 @@ class Simulation:
     def show_information(self, ):
         print("Round number: ", self.round_num)
         print("Wolf position: (", round(self.wolf.get_x_pos(), 3), ", ", round(self.wolf.get_y_pos(), 3), ")")
-        number_of_alive: int = 0
-        for s in self.sheep:
-            if s.is_alive:
-                number_of_alive += 1
-        print("Number of alive sheep: ", number_of_alive)
+        print("Number of alive sheep: ", self.living_sheep_count)
         print("Index of the eaten sheep: ", self.dead_sheep_index, "\n")
 
     @LoggingUtil.debug_logging
