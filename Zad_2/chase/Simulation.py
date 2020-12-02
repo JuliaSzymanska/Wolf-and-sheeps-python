@@ -27,7 +27,7 @@ class Simulation:
 
     @LoggingUtil.debug_logging
     def perform_simulation(self):
-        self.display_and_store_simulation_information(self.living_sheep_count)
+        self.display_and_store_simulation_information(living_sheep_count=self.living_sheep_count)
 
         while self.round_num < self.rounds and self.living_sheep_count > 0:
             self.simulation_round()

@@ -99,6 +99,7 @@ def configuration(parser):
                     Config.SAVE_DIR = Config.DEFAULT_SAVE_DIR
 
     if args.log:
+        args.log = args.log.upper()
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')
         else:

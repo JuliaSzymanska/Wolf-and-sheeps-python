@@ -18,9 +18,11 @@ def debug_logging(func):
     @functools.wraps(func)
     def wrapper(*func_args, **func_kwargs):
         retval = func(*func_args, **func_kwargs)
-        logging.getLogger(__name__).debug('function %s () params %s returns %s', func.__name__, func_args.__str__(),
+        logging.getLogger(__name__).debug('function %s() params %s %s returns %s', func.__name__, func_args.__str__(),
+                                          func_kwargs.__str__(),
                                           repr(retval))
         return retval
+
     return wrapper
 
 
@@ -43,4 +45,5 @@ def log_error_exception(exception):
                 raise e
 
         return wrapper
+
     return error_log
