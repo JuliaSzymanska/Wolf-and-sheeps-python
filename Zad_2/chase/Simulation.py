@@ -101,5 +101,5 @@ class Simulation:
         with open(Config.SAVE_DIR + 'alive.csv', mode='w', newline='') as alive_file:
             csv_writer = csv.writer(alive_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONE)
 
-            for round_number in range(self.rounds):
+            for round_number in range(self.round_num):
                 csv_writer.writerow(self.list_to_write_csv_file[round_number])
