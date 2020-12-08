@@ -33,9 +33,13 @@ class Sheep(Animal):
 
     @LoggingUtil.debug_logging
     def init_position(self):
-        self.set_x_pos(random.uniform(-self.init_pos_limit, self.init_pos_limit))
-        self.set_y_pos(random.uniform(-self.init_pos_limit, self.init_pos_limit))
-        LoggingUtil.info_logging("Initialized sheep position: [ {} , {}]".format(self.get_x_pos(), self.get_y_pos()))
+        self.set_x_pos(
+            random.uniform(-self.init_pos_limit, self.init_pos_limit))
+        self.set_y_pos(
+            random.uniform(-self.init_pos_limit, self.init_pos_limit))
+        LoggingUtil.info_logging(
+            "Initialized sheep position: [ {} , {}]".format(self.get_x_pos(),
+                                                            self.get_y_pos()))
 
     @LoggingUtil.debug_logging
     def move(self):
@@ -60,8 +64,9 @@ class Sheep(Animal):
                 self.set_y_pos(self.get_y_pos() - self.move_dist)
 
             LoggingUtil.info_logging(
-                "Sheep moved to {}. New sheep position: : [{}, {}]".format(selected_move, self.get_x_pos(),
-                                                                           self.get_y_pos()))
+                "Sheep moved to {}. New sheep position: : [{}, {}]".format(
+                    selected_move, self.get_x_pos(),
+                    self.get_y_pos()))
             return
 
     @LoggingUtil.debug_logging
@@ -77,7 +82,8 @@ class Wolf(Animal):
 
     @LoggingUtil.debug_logging
     def calculate_distance(self, one_game_sheep: Sheep):
-        distance_to_sheep = distance.euclidean([self._position], [one_game_sheep._position])
+        distance_to_sheep = distance.euclidean([self._position],
+                                               [one_game_sheep._position])
         return distance_to_sheep
 
     @LoggingUtil.debug_logging
@@ -103,14 +109,16 @@ class Wolf(Animal):
 
         if distance_to_sheep < self.move_dist:
             self.game_sheep[sheep_index].die()
-            LoggingUtil.info_logging("Sheep eaten index: {}".format(sheep_index))
+            LoggingUtil.info_logging(
+                "Sheep eaten index: {}".format(sheep_index))
             return sheep_index
 
         x_pos_sheep = self.game_sheep[sheep_index].get_x_pos()
         y_pos_sheep = self.game_sheep[sheep_index].get_y_pos()
 
         # calculate coefficients for x and y pos change
-        norm: float = math.sqrt((x_pos_sheep - self.get_x_pos()) ** 2 + (y_pos_sheep - self.get_y_pos()) ** 2)
+        norm: float = math.sqrt((x_pos_sheep - self.get_x_pos()) ** 2 + (
+                    y_pos_sheep - self.get_y_pos()) ** 2)
         dir_x = (x_pos_sheep - self.get_x_pos()) / norm
         dir_y = (y_pos_sheep - self.get_y_pos()) / norm
 
@@ -118,6 +126,7 @@ class Wolf(Animal):
         self.set_x_pos(self.get_x_pos() + self.move_dist * dir_x)
         self.set_y_pos(self.get_y_pos() + self.move_dist * dir_y)
         LoggingUtil.info_logging(
-            "New wolf position: : [{}, {}]".format(self.get_x_pos(), self.get_y_pos()))
+            "New wolf position: : [{}, {}]".format(self.get_x_pos(),
+                                                   self.get_y_pos()))
         LoggingUtil.info_logging("No sheep was eaten")
         return None

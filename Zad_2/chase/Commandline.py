@@ -111,15 +111,18 @@ def configuration(parser):
             config = configparser.ConfigParser()
             config.read(config_file)
             if float(config['Terrain']['InitPosLimit']) > 0:
-                Config.INIT_POS_LIMIT = float(config['Terrain']['InitPosLimit'])
+                Config.INIT_POS_LIMIT = float(
+                    config['Terrain']['InitPosLimit'])
             else:
                 raise ValueError('InitPosLimit should be greater than 0.')
             if float(config['Movement']['SheepMoveDist']) > 0:
-                Config.SHEEP_MOVE_DIST = float(config['Movement']['SheepMoveDist'])
+                Config.SHEEP_MOVE_DIST = float(
+                    config['Movement']['SheepMoveDist'])
             else:
                 raise ValueError('SheepMoveDist should be greater than 0.')
             if float(config['Movement']['WolfMoveDist']) > 0:
-                Config.WOLF_MOVE_DIST = float(config['Movement']['WolfMoveDist'])
+                Config.WOLF_MOVE_DIST = float(
+                    config['Movement']['WolfMoveDist'])
             else:
                 raise ValueError('WolfMoveDist should be greater than 0.')
         else:

@@ -7,7 +7,8 @@ from . import Animals, LoggingUtil, Config
 
 
 class Simulation:
-    def __init__(self, rounds: int, number_of_sheep: int, init_pos_limit: float, sheep_move_dist: float,
+    def __init__(self, rounds: int, number_of_sheep: int,
+                 init_pos_limit: float, sheep_move_dist: float,
                  wolf_move_dist: float):
         self.number_of_sheep: int = number_of_sheep
         self.sheep: [Animals.Sheep] = []
@@ -21,7 +22,8 @@ class Simulation:
         self.living_sheep_count = self.number_of_sheep
 
     @LoggingUtil.debug_logging
-    def initialize_sheep(self, number_of_sheep: int, init_pos_limit: float, sheep_move_dist: float):
+    def initialize_sheep(self, number_of_sheep: int, init_pos_limit: float,
+                         sheep_move_dist: float):
         for i in range(number_of_sheep):
             self.sheep.append(Animals.Sheep(init_pos_limit, sheep_move_dist))
 
@@ -45,7 +47,8 @@ class Simulation:
 
         self.round_num += 1
         self.display_and_store_simulation_information(self.living_sheep_count)
-        if Config.WAIT and (self.round_num < self.rounds and self.living_sheep_count > 0):
+        if Config.WAIT and (
+                self.round_num < self.rounds and self.living_sheep_count > 0):
             print("Press any key to continue...")
             msvcrt.getch()
 
@@ -64,7 +67,8 @@ class Simulation:
     @LoggingUtil.debug_logging
     def show_information(self, ):
         print("Round number: ", self.round_num)
-        print("Wolf position: (", round(self.wolf.get_x_pos(), 3), ", ", round(self.wolf.get_y_pos(), 3), ")")
+        print("Wolf position: (", round(self.wolf.get_x_pos(), 3), ", ",
+              round(self.wolf.get_y_pos(), 3), ")")
         print("Number of alive sheep: ", self.living_sheep_count)
         print("Index of the eaten sheep: ", self.dead_sheep_index, "\n")
 
@@ -90,12 +94,15 @@ class Simulation:
 
     @LoggingUtil.debug_logging
     def append_to_csv_list(self, number_of_alive_sheep: int):
-        self.list_to_write_csv_file.append([self.round_num, number_of_alive_sheep])
+        self.list_to_write_csv_file.append(
+            [self.round_num, number_of_alive_sheep])
 
     @LoggingUtil.debug_logging
     def save_to_csv_file(self):
-        with open(Config.SAVE_DIR + 'alive.csv', mode='w', newline='') as alive_file:
-            csv_writer = csv.writer(alive_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONE)
+        with open(Config.SAVE_DIR + 'alive.csv', mode='w',
+                  newline='') as alive_file:
+            csv_writer = csv.writer(alive_file, delimiter=',', quotechar='"',
+                                    quoting=csv.QUOTE_NONE)
 
             for round_number in range(self.round_num):
                 csv_writer.writerow(self.list_to_write_csv_file[round_number])
