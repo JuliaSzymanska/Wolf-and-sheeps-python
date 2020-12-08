@@ -139,5 +139,5 @@ def configuration(parser):
         else:
             raise ValueError('Value should be greater than 0.')
 
-    if args.wait is not None:
+    if args.wait:
         Config.WAIT = True
