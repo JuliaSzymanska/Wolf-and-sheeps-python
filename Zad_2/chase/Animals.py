@@ -1,7 +1,9 @@
 import math
 import random
-from . import LoggingUtil
+
 from scipy.spatial import distance
+
+from . import LoggingUtil
 
 
 class Animal:
@@ -115,5 +117,7 @@ class Wolf(Animal):
         # change x and y position of the wolf
         self.set_x_pos(self.get_x_pos() + self.move_dist * dir_x)
         self.set_y_pos(self.get_y_pos() + self.move_dist * dir_y)
+        LoggingUtil.info_logging(
+            "New wolf position: : [{}, {}]".format(self.get_x_pos(), self.get_y_pos()))
         LoggingUtil.info_logging("No sheep was eaten")
         return None
