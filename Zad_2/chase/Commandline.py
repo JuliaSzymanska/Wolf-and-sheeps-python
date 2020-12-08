@@ -86,7 +86,7 @@ def configuration(parser):
         'DEBUG': logging.DEBUG
     }
 
-    if args.dir:
+    if args.dir is not None:
         Config.SAVE_DIR = args.dir
         Config.SAVE_DIR += '' if Config.SAVE_DIR[-1] == '/' else '/'
         if not Config.SAVE_DIR.startswith('./'):
@@ -98,14 +98,14 @@ def configuration(parser):
                 except OSError:
                     Config.SAVE_DIR = Config.DEFAULT_SAVE_DIR
 
-    if args.log:
+    if args.log is not None:
         args.log = args.log.upper()
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')
         else:
             LoggingUtil.init_logger(levels[args.log])
 
-    if args.config:
+    if args.config is not None:
         config_file = args.config
         if not args.config.endswith('.ini'):
             config_file += '.ini'
@@ -127,17 +127,17 @@ def configuration(parser):
         else:
             raise FileNotFoundError('File does not exist')
 
-    if args.rounds:
+    if args.rounds is not None:
         if args.rounds > 0:
             Config.ROUNDS = args.rounds
         else:
             raise ValueError('Value should be greater than 0.')
 
-    if args.sheep:
+    if args.sheep is not None:
         if args.sheep > 0:
             Config.SHEEP = args.sheep
         else:
             raise ValueError('Value should be greater than 0.')
 
-    if args.wait:
+    if args.wait is not None:
         Config.WAIT = True
