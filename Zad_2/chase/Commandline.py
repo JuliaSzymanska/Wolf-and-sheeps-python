@@ -96,9 +96,7 @@ def configuration(parser):
                     os.mkdir(Config.SAVE_DIR)
                 except OSError:
                     Config.SAVE_DIR = Config.DEFAULT_SAVE_DIR
-    print(args.log)
     if args.log is not None:
-        print("HNWLOOOOOO!!!!!!!!!!!!!!!!!!!!!!!1111")
         args.log = args.log.upper()
         if args.log not in levels.keys():
             raise ValueError('This log level does not exist.')
