@@ -17,6 +17,17 @@
 ## 🧐 About <a name = "about"></a>
 
 
+## 🔑 Prerequisites <a name = "prerequisites"></a>
+
+Install using python by writing
+```cmd
+python setup.py install
+```
+Run by running
+```cmd
+python -m chase
+```
+
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [🐍](https://www.python.org/) - Programming language
