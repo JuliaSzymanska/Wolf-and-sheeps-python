@@ -19,7 +19,7 @@
 
 ## 🔑 Prerequisites <a name = "prerequisites"></a>
 
-Install using python by writing
+Install using python by using the following command from the package's main folder.
 ```cmd
 python setup.py install
 ```
