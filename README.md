@@ -15,7 +15,6 @@
 - [✍️ Authors <a name = "authors"></a>](#️-authors-)
 
 ## 🧐 About <a name = "about"></a>
-A web chat application hosted on Azure cloud services. 
 
 
 ## ⛏️ Built Using <a name = "built_using"></a>
