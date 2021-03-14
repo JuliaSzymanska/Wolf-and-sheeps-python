@@ -16,6 +16,7 @@
 
 ## 🧐 About <a name = "about"></a>
 
+The program contains a simple simulation with a wolf chasing and eating sheeps.
 
 ## 🔑 Prerequisites <a name = "prerequisites"></a>
 
